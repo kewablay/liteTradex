@@ -1,0 +1,15 @@
+@use './_variables.sass' as *
+
+
+$dark-mode: (background: $clr-dark-blue, clr-purple: $clr-purple, clr-purple-light: $clr-purple-light, bg-accent-dark: $clr-dark-blue-light, bg-accent-dark-100: $clr-dark-blue-lighter, text: $clr-white, text-secondary: $clr-dark-gray  )
+
+// $light-mode: (background: Variables.$bg-light, primary: Variables.$clr-primary, bg-accent: Variables.$bg-light-accent,  text: Variables.$clr-black, text-secondary: Variables.$clr-gray-500)
+
+
+:root 
+  @each $key, $value in $dark-mode 
+    --#{$key}: #{$value}
+  
+// [data-theme="light"]
+//   @each $key, $value in $light-mode
+//     --#{$key}: #{$value}
