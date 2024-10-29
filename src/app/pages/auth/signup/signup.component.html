@@ -1,1 +1,70 @@
-<p>signup works!</p>
+<form>
+  <div class="header">
+    <h1>Create an account 🚀</h1>
+  </div>
+
+  <div class="input-sections">
+    <div class="input-group">
+      <label for="name">Name <span class="text-warning">*</span></label>
+      <input type="text" name="name" id="name" placeholder="Enter your name" />
+    </div>
+    <div class="input-group">
+      <label for="email">Email <span class="text-warning">*</span></label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Enter your email"
+      />
+    </div>
+    <div class="input-group">
+      <label for="password">Password <span class="text-warning">*</span></label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Enter your password"
+      />
+    </div>
+
+    <div class="input-group">
+      <label for="country">Country <span class="text-warning">*</span></label>
+      <select name="country" id="country">
+        <option value="india">India</option>
+        <option value="usa">USA</option>
+        <option value="uk">UK</option>
+        <option value="australia">Australia</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label for="password">Password <span class="text-warning">*</span></label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Enter your password"
+      />
+    </div>
+
+    <div class="input-group">
+      <label for="confirm-password"
+        >Confirm Password <span class="text-warning">*</span></label
+      >
+      <input
+        type="password"
+        name="confirm-password"
+        id="confirm-password"
+        placeholder="Confirm your password"
+      />
+    </div>
+
+    <!-- login button -->
+    <button type="submit" class="btn-primary">Create Account</button>
+
+    <p class="have-an-account">
+      Have an account already ?
+      <a class="link" routerLink="/auth/login">Login</a>
+    </p>
+  </div>
+</form>
