@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@use './styles/_functions.sass' as *
+@use './styles/_variables.sass' as *
+@use './styles/_mixins.sass' as *
+@use './styles/_theme.sass'
+
+* 
+    font-family: "Kumbh Sans", serif
+    box-sizing: border-box
+
+body 
+    background: var(--background)
+    color: var(--text)
