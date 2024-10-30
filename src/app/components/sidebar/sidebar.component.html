@@ -35,12 +35,22 @@
   <div class="tabs">
     @if(isAdmin){ @for(tab of adminTabs; track tab){
 
-    <button class="tab" routerLinkActive="active-tab" [routerLink]="tab.route">
+    <button
+      (click)="handleTabChange()"
+      class="tab"
+      routerLinkActive="active-tab"
+      [routerLink]="tab.route"
+    >
       <img [src]="tab.icon" [alt]="tab.name" />
       <span>{{ tab.name }}</span>
     </button>
     } } @else { @for (tab of userTabs; track tab) {
-    <button class="tab" routerLinkActive="active-tab" [routerLink]="tab.route">
+    <button
+      (click)="handleTabChange()"
+      class="tab"
+      routerLinkActive="active-tab"
+      [routerLink]="tab.route"
+    >
       <img [src]="tab.icon" [alt]="tab.name" />
       <span>{{ tab.name }}</span>
     </button>
