@@ -1,0 +1,52 @@
+@use '../../../../styles/_variables.sass' as *
+@use '../../../../styles/_mixins.sass' as *
+@use '../../../../styles/_functions.sass' as *
+
+.add-funds
+    .content
+        margin-top: 2rem
+        .steps
+            width: 100%
+            @include flex( $gap:2rem, $direction: column)
+            @include breakpoint($breakpoint: medium)
+                flex-direction: row
+                // align-items: start
+                justify-content: start
+        app-step
+            width: 100%
+
+        form
+            margin-top: 2rem
+
+            .input-sections
+                @include flex($direction: row, $gap: 2rem)
+
+                .input-group
+                    flex: 1
+
+            .review-section
+                margin-top: 3rem
+
+                h3
+                    font-size: 20px
+
+                .review
+                    background: $clr-black
+                    padding: 1.5rem
+                    margin-top: 1rem
+
+                    .review-item + .review-item
+                        margin-top: 1rem    
+
+                    .review-item
+                        @include flex-between($direction: row, $gap: 1rem)
+                        background: $clr-dark-blue-light
+                        color: white
+                        padding: 1rem
+                        border-radius: 5px
+
+                        p
+                            margin: 0
+
+            button
+                margin-block: 1.5rem
