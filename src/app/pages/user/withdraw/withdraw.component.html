@@ -1,1 +1,72 @@
-<p>withdraw works!</p>
+<main class="withdraw content-wrapper">
+  <div class="header">
+    <h1>Withdraw</h1>
+  </div>
+  <div class="content">
+    <!-- Form and review section  -->
+    <form #addFundsForm="ngForm">
+      <!-- Input sections -->
+      <div class="input-sections">
+        <div class="input-group">
+          <label for="exchange-name">Exchange Name</label>
+          <input
+            type="text"
+            name="exchange-name"
+            id="exchange-name"
+            placeholder="Enter your exchange name"
+            [(ngModel)]="exchangeName"
+          />
+        </div>
+        <div class="input-group">
+          <label for="wallet-address">Wallet Address</label>
+          <input
+            type="text"
+            name="wallet-address"
+            id="wallet-address"
+            placeholder="Enter your wallet address"
+            [(ngModel)]="walletAddress"
+          />
+        </div>
+        <div class="input-group">
+          <label for="amount">Amount</label>
+          <input
+            type="number"
+            name="amount"
+            id="amount"
+            [(ngModel)]="amount"
+            placeholder="Enter your amount"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Review Section -->
+      <div class="review-section">
+        <h3>Review Exchange Details</h3>
+        <div class="review">
+          <div class="review-item">
+            <p>Exchange Name</p>
+            <span>{{ exchangeName | titlecase }}</span>
+          </div>
+          <div class="review-item">
+            <p>Wallet Address</p>
+            <span>{{ walletAddress | titlecase }}</span>
+          </div>
+          <div class="review-item">
+            <p>Total Amount</p>
+            <span>{{ amount ? "$" + amount : "" }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="addFundsForm.invalid"
+      >
+        Proceed to withdraw
+      </button>
+    </form>
+  </div>
+</main>
