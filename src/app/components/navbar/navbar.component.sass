@@ -1,0 +1,20 @@
+@use '../../../styles/_mixins' as * 
+@use '../../../styles/_variables' as * 
+@use '../../../styles/_functions' as * 
+
+.ripple
+    padding: 2rem
+    font-weight: bold
+    font-size: 18px
+    background: $clr-purple
+    color: white
+    width: fit-content
+    margin: 2rem
+
+
+nav 
+    @include flex-between($direction: row )
+    background: var(--bg-accent-dark)
+    border-bottom: 1px solid $clr-dark-blue-line
+    padding: .3rem 1.5rem
+    

@@ -1,0 +1,17 @@
+<nav>
+  <div class="logo">
+    <h3>liteTradex</h3>
+  </div>
+
+  <p-button label="toggle Sidebar" (onClick)="sidebarVisible = true"></p-button>
+</nav>
+
+
+<p-sidebar [(visible)]="sidebarVisible" styleClass="w-30rem">
+    <ng-template pTemplate="header">
+        <span class="font-semibold text-xl">Sidebar</span>
+    </ng-template>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+    </p>
+</p-sidebar>
