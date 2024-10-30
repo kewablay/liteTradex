@@ -1,1 +1,74 @@
-<p>manage-withdrawal works!</p>
+<main class="withdrawal-request content-wrapper">
+  <div class="header">
+    <h1>Withdrawal</h1>
+  </div>
+
+  <!-- Users list -->
+  <div class="users-list">
+    <p-table
+      #dt
+      [value]="withdrawalRequests"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      emptyMessage="No transactions available"
+      [paginator]="true"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [rowsPerPageOptions]="[10, 25, 50]"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Wallet Address</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-withdrawal>
+        <tr>
+          <td id="user-name">
+            <p-avatar label="P" styleClass="mr-2" size="large" shape="circle" />
+            {{ withdrawal.name }}
+          </td>
+          <td>{{ withdrawal.amount }}</td>
+          <td>{{ withdrawal.walletAddress }}</td>
+          <td id="actions">
+            <p-button
+              icon="pi pi-check-square"
+              label="Approve"
+              outlined="true"
+              styleClass="edit-btn"
+              rounded="true"
+              size="small"
+              severity="info"
+              (onClick)="confirmApproveWithdrawal(withdrawal.name, withdrawal.amount)"
+            />
+
+            <p-button
+              icon="pi pi-times-circle"
+              label="Reject"
+              outlined="true"
+              styleClass="edit-btn"
+              rounded="true"
+              size="small"
+              severity="danger"
+              (onClick)="confirmRejectWithdrawal(withdrawal.name, withdrawal.amount)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</main>
+
+<!-- Confirm Delete Dialog -->
+<p-confirmDialog>
+  <ng-template pTemplate="message" let-message>
+    <div
+      class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border"
+    >
+      <p>{{ message.message }}</p>
+    </div>
+  </ng-template>
+</p-confirmDialog>
+<!-- Confirm Delete Dialog ends-->

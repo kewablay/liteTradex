@@ -143,6 +143,10 @@ input, select
         background: $clr-red
         @include flex($direction: row, $gap:.5rem )
 
+    &-success
+        background: $clr-green
+        @include flex($direction: row, $gap:.5rem )
+
     &-ghost
         appearance: none
         border: none
@@ -240,7 +244,7 @@ input, select
             .p-button
                 outline: none
                 border: none
-                padding: 0 !important
+                padding: .4rem !important
 
     .p-paginator
         background: $clr-dark-blue
@@ -297,7 +301,7 @@ input, select
 .p-dialog-title
     line-height: 115% !important
 .p-dialog-content
-    line-height: 115% !important
+    line-height: 150% !important
 // Confirmation styles ends
 
 #card
