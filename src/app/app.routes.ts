@@ -36,7 +36,7 @@ export const routes: Routes = [
     children: [
       // USER pages
       {
-        path: '',
+        path: 'home',
         loadComponent: () =>
           import('./pages/user/home/home.component').then(
             (m) => m.HomeComponent
