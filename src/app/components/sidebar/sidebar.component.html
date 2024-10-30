@@ -1,0 +1,57 @@
+<div class="sidebar">
+  <!-- Logo  -->
+  <div class="logo">
+    <h3>liteTradex</h3>
+  </div>
+
+  <!-- Profile -->
+  <div class="profile">
+    <p-avatar
+      image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+      styleClass="avatar"
+      size="xlarge"
+      shape="circle"
+    />
+
+    <!-- Profile Info -->
+    <div class="profile-info">
+      <h3>Hi, Laurene</h3>
+      <span> laureneJay&#64;gmail.com </span>
+    </div>
+    <!-- Profile Info ends-->
+  </div>
+
+  <!-- Membership Starts -->
+  <div class="membership">
+    <h3>Hyip membership</h3>
+    <div class="level">
+      <img src="assets/icons/medal.svg" alt="medal" />
+      <span>Level 1</span>
+    </div>
+  </div>
+  <!-- Membership Ends -->
+
+  <!-- Sidebar Tabs  -->
+  <div class="tabs">
+    @if(isAdmin){ @for(tab of adminTabs; track tab){
+
+    <button class="tab">
+      <img [src]="tab.icon" [alt]="tab.name" />
+      <span>{{ tab.name }}</span>
+    </button>
+    } } @else { @for (tab of userTabs; track tab) {
+    <button class="tab">
+      <img [src]="tab.icon" [alt]="tab.name" />
+      <span>{{ tab.name }}</span>
+    </button>
+
+    } }
+  </div>
+  <!-- Sidebar Tabs ends -->
+
+  <!-- logout  -->
+  <button class="logout tab">
+    <img src="assets/icons/logout.svg" alt="logout" />
+    <span>Logout</span>
+  </button>
+</div>
