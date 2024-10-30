@@ -3,14 +3,13 @@
 @use '../../../styles/_functions' as * 
 
 .sidebar
-    background: var(--bg-acccent-dark)
+    background: var(--bg-acccent-dark-100)
     border-right: 1px solid $clr-dark-blue-line
-    padding: 1rem
-    padding-inline: 4.5rem
+    padding: 2rem 4rem 1rem 4rem
     min-height: 100vh
-    display: flex 
+    display: flex
     flex-direction: column
-    gap: 3.5rem
+    gap: 3.5rem    
 
     .profile
         // margin-top: 3.5rem
@@ -50,6 +49,10 @@
     outline: none
     color: var(--text)
     transition: all .3s ease
+    text-overflow: nowrap
 
     &:hover
         background: #7c85d38e
+
+    &.active-tab
+        background: $clr-purple-light

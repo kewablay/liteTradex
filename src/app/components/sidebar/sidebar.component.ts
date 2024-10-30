@@ -16,7 +16,7 @@ export class SidebarComponent {
     {
       name: 'Dashboard',
       icon: 'assets/icons/dashboard.svg',
-      route: '',
+      route: 'home',
     },
     {
       name: 'Add funds',

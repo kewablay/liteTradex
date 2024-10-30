@@ -1,17 +1,28 @@
 <nav>
   <div class="logo">
-    <h3>liteTradex</h3>
+    <img src="assets/icons/logo.svg" alt="">
   </div>
 
-  <p-button label="toggle Sidebar" (onClick)="sidebarVisible = true"></p-button>
+  <p-button (onClick)="sidebarVisible = true" outlined="true">
+    <img src="assets/icons/sidebar.svg" alt="sidebar" />
+  </p-button>
 </nav>
 
+<p-sidebar #sidebarRef [(visible)]="sidebarVisible">
+  <ng-template pTemplate="headless">
+    <span id="close-btn">
+      <p-button
+        type="button"
+        (onClick)="closeCallback($event)"
+        rounded="true"
+        outlined="true"
+        styleClass="close"
+      >
+        <img src="assets/icons/close.svg" alt="X" />
+      </p-button>
+    </span>
 
-<p-sidebar [(visible)]="sidebarVisible" styleClass="w-30rem">
-    <ng-template pTemplate="header">
-        <span class="font-semibold text-xl">Sidebar</span>
-    </ng-template>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-    </p>
+    <!-- sidebar content  -->
+    <app-sidebar />
+  </ng-template>
 </p-sidebar>
