@@ -87,6 +87,12 @@ body
     margin: 0
     padding: 0
 
+h1
+    font-size: 40px
+
+h2
+    font-size: 28px
+
 input, select
     background: var(--black-accent)
     color: var(--text)
@@ -100,6 +106,16 @@ input, select
         outline: 1.2px solid $clr-purple
 
 // UTILITY CLASSES
+.content-wrapper
+    max-width: 1024px
+    margin-inline: auto
+    padding-top: 1rem
+    padding-inline: 1.5rem
+
+    @include breakpoint($breakpoint: large)
+        padding-top: 5rem
+    
+
 .text-warning
     color: $clr-red
 
@@ -126,7 +142,7 @@ input, select
     width: 100px
     height: 100px
 
-
+// Sidebar styles
 .p-sidebar 
     background: var(--background) !important
     color: white
@@ -145,3 +161,44 @@ input, select
         padding: 0
         outline: none
         border: none
+
+// Data table styles
+.p-datatable
+    background: $clr-black
+    padding: 1.5rem
+    border-radius: 5px
+
+    .p-datatable-header
+        color: $clr-white
+        background: $clr-black
+        border: none
+        padding: 0
+        padding-bottom : 1rem
+
+        .table-caption
+            @include flex-between($direction: row, $gap: 2rem )
+            font-size: 20px
+
+            span 
+                font-size: 14px
+                font-weight: normal
+    
+    .p-datatable-thead
+        display: table-header-group
+        background: $clr-table-header !important   
+
+        th
+            background: $clr-table-header !important
+            border: none
+            color: white
+            font-weight: semi-bold
+
+    .p-datatable-tbody td 
+        background: $clr-dark-blue-light
+        border-color: $clr-dark-blue-line
+        color: white
+        margin-bottom: 1rem
+#card 
+    .p-button 
+        outline: white
+        color: white
