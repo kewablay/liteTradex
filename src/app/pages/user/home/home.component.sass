@@ -1,0 +1,25 @@
+@use '../../../../styles/_variables.sass' as *
+@use '../../../../styles/_mixins.sass' as *
+@use '../../../../styles/_functions.sass' as *
+
+
+.home 
+    .content
+        margin-top: 2rem
+        .balances
+            @include flex( $gap:2rem, $direction: column)
+            @include breakpoint($breakpoint: small)
+                flex-direction: row
+                // align-items: start
+                justify-content: start
+
+            app-card
+                width: 100%
+
+        .transaction-history
+            margin-top: 2rem
+            
+
+            
+            
+

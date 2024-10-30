@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
 
@@ -10,7 +10,13 @@ import { AvatarModule } from 'primeng/avatar';
   styleUrl: './sidebar.component.sass',
 })
 export class SidebarComponent {
+  @Output () onTabChange = new EventEmitter<Event>();
   isAdmin = false;
+
+
+  handleTabChange(): void {
+    this.onTabChange.emit();
+  }
 
   userTabs = [
     {
