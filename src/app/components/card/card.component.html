@@ -1,0 +1,32 @@
+<div
+  class="card"
+  id="card"
+  [style]="{
+    'background-color': cardTitle === 'Profit Wallet' ? '#9543FA' : '#4743FA'
+  }"
+>
+  <div class="card-header">
+    <h4>{{cardTitle}}</h4>
+
+    @if(isAdminCard){
+      <p-button
+        label="Edit"
+        icon="pi pi-pen-to-square"
+        outlined="true"
+        styleClass="edit-btn"
+        rounded="true"
+        (click)="handleEdit()"
+        size="small"
+      />
+
+    }
+  </div>
+
+  <div class="card-body">
+    <h2>${{balance}}</h2>
+  </div>
+
+  <div class="card-footer">
+    <small>Balance at 2pm 20,09,2024 </small>
+  </div>
+</div>
