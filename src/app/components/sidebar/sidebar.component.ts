@@ -11,7 +11,7 @@ import { AvatarModule } from 'primeng/avatar';
 })
 export class SidebarComponent {
   @Output () onTabChange = new EventEmitter<Event>();
-  isAdmin = false;
+  isAdmin = true;
 
 
   handleTabChange(): void {
@@ -45,12 +45,12 @@ export class SidebarComponent {
     {
       name: 'User Management',
       icon: 'assets/icons/user-management.svg',
-      route: 'user-management',
+      route: 'admin/user-management',
     },
     {
       name: 'Manage Withdrawal',
       icon: 'assets/icons/withdraw.svg',
-      route: 'manage-withdrawal',
+      route: 'admin/manage-withdrawal',
     },
   ];
 }
