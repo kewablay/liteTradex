@@ -1,1 +1,48 @@
-<p>home works!</p>
+<main class="home content-wrapper">
+  <div class="header">
+    <h1>Dashboard</h1>
+  </div>
+
+  <div class="content">
+    <div class="balances">
+      <app-card [cardTitle]="'Main Wallet'" [balance]="'2,520.00'" />
+      <app-card [cardTitle]="'Profit Wallet'" [balance]="'220.00'" />
+    </div>
+    <div class="transaction-history">
+      <p-table
+        #dt
+        [value]="transactions"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        emptyMessage="No transactions available"
+      >
+        <ng-template pTemplate="caption">
+          <div class="table-caption">
+            Transaction History
+            <span>Total: <p-badge [value]="transactions.length" /></span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Transaction Id</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Fee</th>
+            <th>Status</th>
+            <th>Gateway</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-transaction>
+          <tr>
+            <td>{{ transaction.id }}</td>
+            <td>{{ transaction.type }}</td>
+            <td>{{ transaction.amount | currency }}</td>
+            <td>{{ transaction.fee | currency }}</td>
+            <td>{{ transaction.status }}</td>
+            <td>{{ transaction.gateway }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</main>
+ 
