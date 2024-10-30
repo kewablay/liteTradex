@@ -1,1 +1,93 @@
-<p>wallet-exchange works!</p>
+<main class="wallet-exchange content-wrapper">
+  <div class="header">
+    <h1>Wallet Exchange</h1>
+  </div>
+  <div class="content">
+    <div class="steps">
+      <app-step
+        [title]="'Wallet Details'"
+        [description]="'Enter your wallet details'"
+        [step]="'01'"
+        [accentColor]="'#FFC300'"
+        [active]="true"
+      />
+      <app-step
+        [title]="'Complete'"
+        [description]="'Submit details to complete exchange'"
+        [step]="'02'"
+        [accentColor]="'#9543FA'"
+      />
+    </div>
+    <!-- Form and review section  -->
+    <form #addFundsForm="ngForm">
+      <!-- Input sections -->
+      <div class="input-sections">
+        <div class="input-group">
+          <label for="from-wallet">From Wallet</label>
+          <select
+            name="fromWallet"
+            id="from-wallet"
+            [(ngModel)]="fromWallet"
+            required
+          >
+            <option [defaultSelected]="true"  value="main wallet">--Select from wallet-- </option>
+            <option  value="main wallet">Main Wallet</option>
+            <option  value="profitwallet">Profit Wallet</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="to-wallet">To Wallet</label>
+          <select
+            name="toWallet"
+            id="to-wallet"
+            [(ngModel)]="toWallet"
+            required
+          >
+          <option [defaultSelected]="true"  value="main wallet">--Select to wallet-- </option>
+            <option value="main wallet">Main Wallet</option>
+            <option value="profit wallet">Profit Wallet</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="amount">Amount</label>
+          <input
+            type="number"
+            name="amount"
+            id="amount"
+            [(ngModel)]="amount"
+            placeholder="Enter your amount"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Review Section -->
+      <div class="review-section">
+        <h3>Review Exchange Details</h3>
+        <div class="review">
+          <div class="review-item">
+            <p>From Wallet</p>
+            <span>{{ fromWallet | titlecase }}</span>
+          </div>
+          <div class="review-item">
+            <p>To Wallet</p>
+            <span>{{ toWallet | titlecase}}</span>
+          </div>
+          <div class="review-item">
+            <p>Total Amount</p>
+            <span>{{ amount ? "$" + amount : "" }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="addFundsForm.invalid"
+      >
+        Proceed to Exchange
+      </button>
+    </form>
+  </div>
+</main>
