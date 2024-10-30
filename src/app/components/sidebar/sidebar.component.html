@@ -1,7 +1,7 @@
 <div class="sidebar">
   <!-- Logo  -->
   <div class="logo">
-    <h3>liteTradex</h3>
+    <img src="assets/icons/logo.svg" alt="" />
   </div>
 
   <!-- Profile -->
@@ -35,7 +35,7 @@
   <div class="tabs">
     @if(isAdmin){ @for(tab of adminTabs; track tab){
 
-    <button class="tab" routerLinkActive="active-tab"  [routerLink]="tab.route">
+    <button class="tab" routerLinkActive="active-tab" [routerLink]="tab.route">
       <img [src]="tab.icon" [alt]="tab.name" />
       <span>{{ tab.name }}</span>
     </button>

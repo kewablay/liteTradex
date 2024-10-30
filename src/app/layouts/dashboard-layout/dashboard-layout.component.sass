@@ -8,3 +8,14 @@
         grid-template-columns: 1fr 4fr
         grid-template-rows: 1fr
 
+
+    .sidebar-container
+        display: none
+        @include breakpoint($breakpoint: large)
+            display: flex
+        
+
+    app-navbar 
+        @include breakpoint($breakpoint: large)
+            display: none
+        
