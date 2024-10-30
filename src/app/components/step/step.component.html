@@ -1,0 +1,16 @@
+<div class="step" [style]="{ 'border-color': active ? accentColor : '' }">
+  <p-avatar
+    [label]="step"
+    styleClass="mr-2"
+    size="large"
+    [style]="{
+      'background-color': accentColor,
+      color: step === '02' ? 'white' : 'black'
+    }"
+    shape="circle"
+  />
+  <div class="content">
+    <h3>{{ title }}</h3>
+    <p>{{ description }}</p>
+  </div>
+</div>
