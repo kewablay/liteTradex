@@ -47,7 +47,7 @@
               outlined="true"
               styleClass="edit-btn"
               rounded="true"
-              (click)="handleDelete($event)"
+              (click)="handleDelete($event, user.name)"
               size="small"
               severity="danger"
             />
@@ -60,3 +60,15 @@
     </p-table>
   </div>
 </main>
+
+<!-- Confirm Delete Dialog -->
+<p-confirmDialog>
+  <ng-template pTemplate="message" let-message>
+    <div
+      class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border"
+    >
+      <p>{{ message.message }}</p>
+    </div>
+  </ng-template>
+</p-confirmDialog>
+<!-- Confirm Delete Dialog ends-->

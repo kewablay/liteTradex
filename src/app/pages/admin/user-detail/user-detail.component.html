@@ -1,1 +1,51 @@
-<p>user-detail works!</p>
+<main class="user-detail content-wrapper">
+  <div class="header">
+    <h1>User Detail</h1>
+    <p-button
+      icon="pi pi-arrow-left"
+      routerLink="/admin/user-management"
+      styleClass="back-btn"
+      severity="primary"
+    ></p-button>
+  </div>
+
+  <div class="content">
+    <div class="balances">
+      <app-card
+        [isAdminCard]="true"
+        [cardTitle]="'Main Wallet'"
+        [balance]="'2,520.00'"
+      />
+      <app-card
+        [isAdminCard]="true"
+        [cardTitle]="'Profit Wallet'"
+        [balance]="'220.00'"
+      />
+    </div>
+
+    <div class="personal-info">
+      <!-- Review Section -->
+      <div class="review-section">
+        <h3>Personal Information</h3>
+        <div class="review">
+          <div class="review-item">
+            <p>Name</p>
+            <span>Laurene Jay </span>
+          </div>
+          <div class="review-item">
+            <p>Email</p>
+            <span>laureneJay&#64;gmail.com</span>
+          </div>
+          <div class="review-item">
+            <p>Country</p>
+            <span>USA</span>
+          </div>
+          <div class="review-item">
+            <p>Joined on</p>
+            <span>25th September, 2024</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,49 @@
+@use '../../../../styles/_variables.sass' as *
+@use '../../../../styles/_mixins.sass' as *
+@use '../../../../styles/_functions.sass' as *
+
+.user-detail
+    .header
+        @include flex-between($direction: row, $gap:1rem )
+        margin-top: 1.5rem
+        h1
+            margin-top: 0
+
+    .content
+        margin-top: 2rem
+        .balances
+            @include flex( $gap:2rem, $direction: column)
+            @include breakpoint($breakpoint: small)
+                flex-direction: row
+                // align-items: start
+                justify-content: start
+
+            app-card
+                width: 100%
+
+        .personal-info
+            margin-top: 2rem
+
+            .review-section
+                margin-top: 3rem
+
+                h3
+                    font-size: 20px
+
+                .review
+                    background: $clr-black
+                    padding: 1.5rem
+                    margin-top: 1rem
+
+                    .review-item + .review-item
+                        margin-top: 1rem
+
+                    .review-item
+                        @include flex-between($direction: row, $gap: 1rem)
+                        background: $clr-dark-blue-light
+                        color: white
+                        padding: 1rem
+                        border-radius: 5px
+
+                        p
+                            margin: 0
