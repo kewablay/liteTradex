@@ -1,1 +1,67 @@
-<p>add-funds works!</p>
+<main class="add-funds content-wrapper">
+  <div class="header">
+    <h1>Add funds</h1>
+  </div>
+  <div class="content">
+    <div class="steps">
+      <app-step
+        [title]="'Deposit Amount'"
+        [description]="'Enter your deposit details'"
+        [step]="'01'"
+        [accentColor]="'#FFC300'"
+        [active]="true"
+      />
+      <app-step
+        [title]="'Complete'"
+        [description]="'Submit details to complete deposit'"
+        [step]="'02'"
+        [accentColor]="'#9543FA'"
+      />
+    </div>
+   <!-- Form and review section  -->
+   <form #addFundsForm="ngForm">
+    <!-- Input sections -->
+    <div class="input-sections">
+      <div class="input-group">
+        <label for="payment-method">Payment Method</label>
+        <select name="paymentMethod" id="payment-method" [(ngModel)]="paymentMethod" required>
+          <option value="bank">Bank</option>
+          <option value="paypal">Paypal</option>
+          <option value="stripe">Stripe</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label for="amount">Amount</label>
+        <input
+          type="number"
+          name="amount"
+          id="amount"
+          [(ngModel)]="amount"
+          placeholder="Enter your amount"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Review Section -->
+    <div class="review-section">
+      <h3>Review Payment Details</h3>
+      <div class="review">
+        <div class="review-item">
+          <p>Payment Method</p>
+          <span>{{ paymentMethod | titlecase }}</span>
+        </div>
+        <div class="review-item">
+          <p>Amount</p>
+          <span>{{ amount ? ('$' + amount) : '' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn-primary" [disabled]="addFundsForm.invalid">
+      Proceed to Payment
+    </button>
+  </form>
+  </div>
+</main>
