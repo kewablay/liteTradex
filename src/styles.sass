@@ -108,7 +108,7 @@ input, select
 .content-wrapper
     max-width: 1024px
     margin-inline: auto
-    padding-top: 1rem
+    padding-block: 1rem
     padding-inline: 1.5rem
 
     @include breakpoint($breakpoint: large)
@@ -187,6 +187,12 @@ input, select
             span
                 font-size: 14px
                 font-weight: normal
+                display: none
+                @include breakpoint($breakpoint: large)
+                    display: flex
+                    justify-content: center
+                    align-items: center
+                    gap: .2rem
 
     .p-datatable-thead
         display: table-header-group
