@@ -204,11 +204,74 @@ input, select
             color: white
             font-weight: semi-bold
 
-    .p-datatable-tbody td
-        background: $clr-dark-blue-light
+    .p-datatable-tbody
+        tr
+            cursor: pointer
+            
+            &:hover td
+                background: $clr-dark-blue
+        td
+            background: $clr-dark-blue-light
+            border-color: $clr-dark-blue-line
+            color: white
+            margin-bottom: 1rem
+
+        #user-name
+            p-avatar
+                margin-right: .5rem
+
+        #actions
+            // display: flex
+            gap: .5rem
+            // align-items: center
+            // @include flex($direction: row, $gap:.5rem )
+
+            .p-button + .p-button
+                margin-left: .5rem
+            .p-button
+                outline: none
+                border: none
+                padding: 0 !important
+
+    .p-paginator
+        background: $clr-dark-blue
         border-color: $clr-dark-blue-line
+
+        .p-paginator-current
+            color: #cac8c8
+
+        button
+            color: white
+
+        .p-highlight
+            background: $clr-purple-light
+
+        .p-paginator-rpp-options
+            background: $clr-black
+            border: $clr-dark-blue-line
+
+            // .p-dropdown
+            //     background: $clr-black
+            //     border: $clr-dark-blue-line
+            //     color: white
+
+            //     .p-dropdown-label 
+            //         color: white
+.p-dropdown-items-wrapper
+    background: $clr-black
+
+    .p-dropdown-items
         color: white
-        margin-bottom: 1rem
+
+        .p-element
+            color: white
+
+            &:not(.p-highlight):hover
+                color: black
+
+.p-dropdown-label
+    color: #cac8c8
+
 #card
     .p-button
         outline: white
