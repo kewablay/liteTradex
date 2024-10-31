@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthServiceService } from '../../../services/auth-service/auth-service.service';
+import { AuthService } from '../../../services/auth-service/auth-service.service';
 import { CountryService } from '../../../services/country-service/country-service.service';
 import { Notyf } from 'notyf';
 import { NOTYF } from '../../../utils/notyf.token';
@@ -35,7 +35,7 @@ export class SignupComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthServiceService,
+    private authService: AuthService,
     private countryService: CountryService,
     private router: Router,
     @Inject(NOTYF) private notyf: Notyf
@@ -84,7 +84,7 @@ export class SignupComponent {
             this.notyf.success('Account created successful.');
             this.router.navigate(['auth/login']);
           },
-          (error: any) => {
+          (error: Error) => {
             this.signUpLoading = false;
             this.notyf.error('Error occured while signing up.');
             console.log('error from signup', error);
