@@ -1,0 +1,44 @@
+<form class="balance-form">
+  <div class="header modal-header">
+    <h2>
+      {{
+        dialogType === "main-wallet" ? "Edit Main Wallet" : "Edit Profit Wallet"
+      }}
+    </h2>
+
+    <p-button id="close-button" (click)="handleClose()" [outlined]="true">
+      <img src="assets/icons/close.svg" alt="close" />
+    </p-button>
+  </div>
+
+  <div class="input-sections">
+    <!-- Amount input -->
+    <div class="input-group">
+      <label for="amount">Amount</label>
+      <input
+        type="number"
+        name="amount"
+        id="amount"
+        placeholder="Enter your amount"
+        required
+      />
+    </div>
+
+    <!-- Currency  -->
+    <div class="input-group">
+      <label for="currency">Currency</label>
+      <select name="currency" id="currency" required>
+        <option value="usd">USD</option>
+        <option value="inr">INR</option>
+        <option value="btc">BTC</option>
+        <option value="eth">ETH</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- button group  -->
+  <div class="button-group">
+    <button type="button" class="btn-secondary">Cancel</button>
+    <button type="submit" class="btn-primary">Save</button>
+  </div>
+</form>
