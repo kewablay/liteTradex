@@ -6,21 +6,28 @@ import {
 } from '@angular/fire/auth';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthServiceService {
+export class AuthService {
+  // private currentUser = new BehaviorSubject<any>(null);
+  // currentUser$ = this.currentUser.asObservable();
   constructor(
     private firestore: Firestore,
     private auth: Auth,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {}
 
-  login(email: string, password: string) {
+  async login(email: string, password: string) {
+    console.log('login in service called');
     return signInWithEmailAndPassword(this.auth, email, password);
   }
-  signUp(
+
+  async signUp(
     email: string,
     username: string,
     password: string,
@@ -38,7 +45,7 @@ export class AuthServiceService {
           username,
           email,
           avatarUrl: avatarUrl,
-          isAdmin: false,
+          role: 'USER',
           country,
           createdAt: new Date().toISOString(),
           balance: {
@@ -54,5 +61,12 @@ export class AuthServiceService {
         });
       }
     );
+  }
+
+  logout() {
+    this.cookieService.delete('AUTH_TOKEN', '/');
+    this.cookieService.delete('USER_ROLE', '/');
+    this.auth.signOut();
+    this.router.navigate(['/auth/login']);
   }
 }
