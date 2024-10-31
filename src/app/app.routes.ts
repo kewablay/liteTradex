@@ -28,7 +28,7 @@ export const routes: Routes = [
 
   //   DASHBOARD routes
   {
-    path: '',
+    path: 'dashboard',
     loadComponent: () =>
       import('./layouts/dashboard-layout/dashboard-layout.component').then(
         (m) => m.DashboardLayoutComponent
@@ -92,5 +92,12 @@ export const routes: Routes = [
         ],
       },
     ],
+  },
+
+  // DEFAULT routes
+  {
+    path: '',
+    redirectTo: 'auth/login',
+    pathMatch: 'full',
   },
 ];
