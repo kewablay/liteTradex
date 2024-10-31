@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
+import { UserService } from '../../services/user-service/user.service';
+import { AuthService } from '../../services/auth-service/auth-service.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,9 +12,8 @@ import { AvatarModule } from 'primeng/avatar';
   styleUrl: './sidebar.component.sass',
 })
 export class SidebarComponent {
-  @Output () onTabChange = new EventEmitter<Event>();
+  @Output() onTabChange = new EventEmitter<Event>();
   isAdmin = true;
-
 
   handleTabChange(): void {
     this.onTabChange.emit();
@@ -53,4 +54,19 @@ export class SidebarComponent {
       route: 'admin/manage-withdrawal',
     },
   ];
+
+  constructor(
+    private userService: UserService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.userService.getUserRole().subscribe((role) => {
+      this.isAdmin = role === 'ADMIN';
+    });
+  }
+
+  handleLogout() {
+    this.authService.logout();
+  }
 }
