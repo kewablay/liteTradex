@@ -15,11 +15,13 @@
         [isAdminCard]="true"
         [cardTitle]="'Main Wallet'"
         [balance]="'2,520.00'"
+        (onEdit)="showDialog('main-wallet')"
       />
       <app-card
         [isAdminCard]="true"
         [cardTitle]="'Profit Wallet'"
         [balance]="'220.00'"
+        (onEdit)="showDialog('profit-wallet')"
       />
     </div>
 
@@ -49,3 +51,15 @@
     </div>
   </div>
 </main>
+
+<!-- dialoge  -->
+
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+>
+  <ng-template pTemplate="headless">
+    <app-balance-form (onClose)="closeDialog()" [dialogType]="dialogType" />
+  </ng-template>
+</p-dialog>
