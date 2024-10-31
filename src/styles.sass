@@ -87,10 +87,19 @@ body
     padding: 0
 
 h1
-    font-size: 40px
+    font-size: 28px
+    @include breakpoint($breakpoint: medium)
+        font-size: 40px
 
 h2
-    font-size: 28px
+    font-size: 20px
+    @include breakpoint($breakpoint: medium)
+        font-size: 28px
+
+p
+    font-size: 14px
+    @include breakpoint($breakpoint: medium)
+        font-size: 16px
 
 input, select
     background: var(--black-accent)
