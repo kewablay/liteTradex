@@ -70,19 +70,19 @@ export class LoginComponent {
                   secure: true,
                   httpOnly: true,
                 } as CookieOptions);
-              }
-              // Update user role in user service
-              this.userService.setUserRole(user['role']);
-  
-              // Show Login successful
-              this.loginLoading = false;
-              this.notyf.success('Login successful');
-  
-              // Navigate to dashboard based on the users role
-              if (user['role'] === 'ADMIN') {
-                this.router.navigate(['dashboard/admin/user-management']);
-              } else {
-                this.router.navigate(['dashboard/home']);
+                // Update user role in user service
+                this.userService.setUserRole(user['role']);
+    
+                // Show Login successful
+                this.loginLoading = false;
+                this.notyf.success('Login successful');
+    
+                // Navigate to dashboard based on the users role
+                if (user['role'] === 'ADMIN') {
+                  this.router.navigate(['dashboard/admin/user-management']);
+                } else {
+                  this.router.navigate(['dashboard/home']);
+                }
               }
             }, 
             error: (error) => {
