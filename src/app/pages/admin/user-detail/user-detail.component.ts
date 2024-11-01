@@ -8,6 +8,7 @@ import { DocumentData } from '@angular/fire/firestore';
 import { Observable, switchMap } from 'rxjs';
 import { UserService } from '../../../services/user-service/user.service';
 import { AsyncPipe, DatePipe } from '@angular/common';
+import { Wallet } from '../../../models/app.model';
 
 @Component({
   selector: 'app-user-detail',
@@ -19,7 +20,7 @@ import { AsyncPipe, DatePipe } from '@angular/common';
     DialogModule,
     BalanceFormComponent,
     AsyncPipe,
-    DatePipe
+    DatePipe,
   ],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.sass',
@@ -27,23 +28,32 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 export class UserDetailComponent {
   visible: boolean = false;
   dialogType: string = '';
-  user$!: Observable<DocumentData>;
+  dialogBalance!: Wallet;
+  user$!: Observable<DocumentData | undefined>;
+  userId!: string;
 
-  constructor(private route: ActivatedRoute, private userService: UserService) {
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService
+  ) {}
+
+  ngOnInit(): void {
     this.user$ = this.route.paramMap.pipe(
       switchMap((params) => {
         const userId = params.get('id');
+        this.userId = userId as string;
         return this.userService.getUserById(userId as string);
       })
     );
   }
 
-  handleEditMainWallet(): void {}
+  setDialogBalance(wallet: Wallet): void {
+    this.dialogBalance = wallet;
+  }
 
-  handleEditProfitWallet(): void {}
-
-  showDialog(type: string): void {
+  showDialog(type: string, balanceWallet: Wallet): void {
     this.dialogType = type;
+    this.setDialogBalance(balanceWallet);
     this.visible = true;
   }
   closeDialog(): void {
