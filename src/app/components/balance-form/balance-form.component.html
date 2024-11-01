@@ -27,19 +27,23 @@
     <!-- Currency  -->
     <div class="input-group">
       <label for="currency">Currency</label>
-      <input
-        type="text"
-        name="currency"
-        id="currency"
-        formControlName="currency"
-        readonly
-      />
+
+      <select name="currency" id="currency" formControlName="currency" required>
+        <option [defaultSelected]="true" value="USD">USD</option>
+        <option value="GHS">GHS</option>
+        <option value="XOF">XOF</option>
+        <option value="NGN">NGN</option>
+      </select>
     </div>
   </div>
 
   <!-- button group  -->
   <div class="button-group">
-    <button type="button" class="btn-secondary">Cancel</button>
-    <button type="submit" class="btn-primary">Save</button>
+    <button type="button" class="btn-secondary" (click)="handleClose()">
+      Cancel
+    </button>
+    <button type="submit" class="btn-primary" [disabled]="updateBalanceLoading">
+      @if(updateBalanceLoading){ Saving...} @else { Save }
+    </button>
   </div>
 </form>

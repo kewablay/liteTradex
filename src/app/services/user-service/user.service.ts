@@ -24,6 +24,7 @@ import {
   throwError,
 } from 'rxjs';
 import { LocalStorageService } from '../local-storage-service/local-storage.service';
+import { Wallet } from '../../models/app.model';
 
 @Injectable({
   providedIn: 'root',
@@ -65,6 +66,24 @@ export class UserService {
       catchError(() => of(undefined)) // handle errors and emit undefined
     );
   }
+  getUserByIdOneTime(uid: string | undefined): Observable<any | undefined> {
+    const usersCollection = collection(this.firestore, 'users');
+    const q = query(usersCollection, where('uid', '==', uid));
+
+    return from(getDocs(q)).pipe(
+      map((snapshot) => {
+        // Check if there's any data in the snapshot
+        if (!snapshot.empty) {
+          return snapshot.docs[0].data(); // Return the first matching user's data
+        } else {
+          throw new Error('User not found');
+        }
+      }),
+      // Optional: handle any errors by returning an observable with undefined
+      catchError(() => of(undefined))
+    );
+  }
+
 
   deleteUser(userId: string): Observable<void> {
     // Find the Firestore document reference for the user
@@ -100,7 +119,8 @@ export class UserService {
     );
   }
 
-  updateUserMainBalance(userId: string, balance: any): Observable<void> {
+
+  updateUserMainBalance(userId: string, balance: Wallet): Observable<void> {
     console.log('update data: ', balance, userId);
     const usersCollection = collection(this.firestore, 'users');
     const q = query(usersCollection, where('uid', '==', userId));
@@ -122,7 +142,7 @@ export class UserService {
     );
   }
 
-  updateUserProfitBalance(userId: string, balance: any): Observable<void> {
+  updateUserProfitBalance(userId: string, balance: Wallet): Observable<void> {
     const usersCollection = collection(this.firestore, 'users');
     const q = query(usersCollection, where('uid', '==', userId));
 

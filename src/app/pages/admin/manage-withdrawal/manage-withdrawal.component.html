@@ -12,7 +12,7 @@
       [tableStyle]="{ 'min-width': '50rem' }"
       emptyMessage="No transactions available"
       [paginator]="true"
-      [rows]="10"
+      [rows]="5"
       [showCurrentPageReport]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       [rowsPerPageOptions]="[10, 25, 50]"
@@ -22,6 +22,7 @@
           <th>Exchange Name</th>
           <th>Amount</th>
           <th>Wallet Address</th>
+          <th>Status</th>
           <th>Actions</th>
         </tr>
       </ng-template>
@@ -33,6 +34,7 @@
           </td>
           <td>{{ withdrawal["currency"] }} {{ withdrawal["amount"] }}</td>
           <td>{{ withdrawal["walletAddress"] }}</td>
+          <td>{{ withdrawal["status"] }}</td>
           <td id="actions">
             <p-button
             icon="pi pi-check-square"
@@ -47,7 +49,8 @@
                   withdrawal['exchangeName'],
                   withdrawal['amount'],
                   withdrawal['currency'],
-                  withdrawal['id']
+                  withdrawal['id'], 
+                  withdrawal['userId'] 
                 )
               "
             />
@@ -59,15 +62,33 @@
               styleClass="edit-btn"
               rounded="true"
               size="small"
-              severity="danger"
+              severity="warning"
+              id="delete-button"
               (onClick)="
                 confirmRejectWithdrawal(
                   withdrawal['exchangeName'],
                   withdrawal['amount'],
                   withdrawal['currency'],
-                  withdrawal['id']
+                  withdrawal['id'], 
+                  withdrawal['status']
                 )
               "
+            />
+            <p-button
+              icon="pi pi-trash"
+              label="Del"
+              outlined="true"
+              styleClass="edit-btn"
+              rounded="true"
+              size="small"
+              severity="danger"
+              id="delete-button"
+              (click)="confirmDeleteWithdrawal(
+                withdrawal['exchangeName'],
+                withdrawal['amount'],
+                withdrawal['currency'],
+                withdrawal['id']
+              )"
             />
           </td>
         </tr>

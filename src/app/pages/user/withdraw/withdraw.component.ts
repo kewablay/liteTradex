@@ -7,6 +7,8 @@ import { create } from 'domain';
 import { Notyf } from 'notyf';
 import { NOTYF } from '../../../utils/notyf.token';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { DocumentData } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-withdraw',
@@ -20,6 +22,9 @@ export class WithdrawComponent {
   walletAddress: string = ''; // Default value
   amount: number | null = null;
   currency: string = '';
+  withdrawLoading: boolean = false;
+  user$!: Observable<DocumentData | undefined>;
+  currentBalance!: number;
 
   constructor(
     private withdrawalService: WithdrawalService,
@@ -30,12 +35,26 @@ export class WithdrawComponent {
     this.currency = this.userService.getCurrentUserCurrency();
   }
 
+  ngOnInit() {
+    this.user$ = this.userService.getUserById(
+      this.userService.getCurrentUserId()
+    );
+    this.user$.subscribe((user) => {
+      if (user) {
+        this.currentBalance = Number(user['balance']['mainWallet']['amount']);
+      }
+    });
+  }
+
   checkValidation() {
     if (
       this.exchangeName === '' ||
       this.walletAddress === '' ||
       this.amount === null
     ) {
+      return false;
+    } else if (this.amount > this.currentBalance) {
+      this.notyf.error('Insufficient balance');
       return false;
     }
     return true;
@@ -52,6 +71,8 @@ export class WithdrawComponent {
       return;
     }
 
+    this.withdrawLoading = true;
+
     const withdrawalData = {
       exchangeName: this.exchangeName,
       walletAddress: this.walletAddress,
@@ -63,12 +84,14 @@ export class WithdrawComponent {
     };
     this.withdrawalService.createWithdrawal(withdrawalData).subscribe({
       next: (withdrawal) => {
+        this.withdrawLoading = false;
         console.log('Withdrawal created successfully:', withdrawal);
         this.notyf.success('Withdrawal request submitted');
         this.resetFormFields();
         this.router.navigate(['/dashboard/home']);
       },
       error: (error) => {
+        this.withdrawLoading = false;
         console.error('Error creating withdrawal:', error);
         this.notyf.error(error.message);
         this.resetFormFields();
