@@ -1,4 +1,7 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth-guard/auth.guard';
+import { roleGuard } from './guards/role-guard/role.guard';
+import { adminGuard } from './guards/admin-guard/admin.guard';
 
 export const routes: Routes = [
   // AUTH routes
@@ -28,7 +31,8 @@ export const routes: Routes = [
 
   //   DASHBOARD routes
   {
-    path: '',
+    path: 'dashboard',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./layouts/dashboard-layout/dashboard-layout.component').then(
         (m) => m.DashboardLayoutComponent
@@ -37,6 +41,7 @@ export const routes: Routes = [
       // USER pages
       {
         path: 'home',
+        canActivate: [roleGuard],
         loadComponent: () =>
           import('./pages/user/home/home.component').then(
             (m) => m.HomeComponent
@@ -44,6 +49,7 @@ export const routes: Routes = [
       },
       {
         path: 'add-funds',
+        canActivate: [roleGuard],
         loadComponent: () =>
           import('./pages/user/add-funds/add-funds.component').then(
             (m) => m.AddFundsComponent
@@ -51,6 +57,7 @@ export const routes: Routes = [
       },
       {
         path: 'withdraw',
+        canActivate: [roleGuard],
         loadComponent: () =>
           import('./pages/user/withdraw/withdraw.component').then(
             (m) => m.WithdrawComponent
@@ -58,6 +65,7 @@ export const routes: Routes = [
       },
       {
         path: 'wallet-exchange',
+        canActivate: [roleGuard],
         loadComponent: () =>
           import('./pages/user/wallet-exchange/wallet-exchange.component').then(
             (m) => m.WalletExchangeComponent
@@ -67,6 +75,7 @@ export const routes: Routes = [
       // ADMIN pages
       {
         path: 'admin',
+        canActivate: [adminGuard],
         children: [
           {
             path: 'user-management',
@@ -92,5 +101,12 @@ export const routes: Routes = [
         ],
       },
     ],
+  },
+
+  // DEFAULT routes
+  {
+    path: '',
+    redirectTo: 'auth/login',
+    pathMatch: 'full',
   },
 ];

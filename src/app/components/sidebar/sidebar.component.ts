@@ -1,6 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
+import { UserService } from '../../services/user-service/user.service';
+import { AuthService } from '../../services/auth-service/auth-service.service';
+import { Notyf } from 'notyf';
+import { NOTYF } from '../../utils/notyf.token';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,9 +14,8 @@ import { AvatarModule } from 'primeng/avatar';
   styleUrl: './sidebar.component.sass',
 })
 export class SidebarComponent {
-  @Output () onTabChange = new EventEmitter<Event>();
-  isAdmin = true;
-
+  @Output() onTabChange = new EventEmitter<Event>();
+  isAdmin!: boolean;
 
   handleTabChange(): void {
     this.onTabChange.emit();
@@ -53,4 +56,21 @@ export class SidebarComponent {
       route: 'admin/manage-withdrawal',
     },
   ];
+
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+    @Inject(NOTYF) private notyf: Notyf
+  ) {}
+
+  ngOnInit() {
+    this.userService.getUserRole().subscribe((role) => {
+      this.isAdmin = role === 'ADMIN';
+    });
+  }
+
+  handleLogout() {
+    this.authService.logout();
+    this.notyf.success('Logged out.');
+  }
 }

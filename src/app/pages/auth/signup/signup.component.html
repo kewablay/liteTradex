@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="signUpForm" (submit)="onSubmit()">
   <div class="header">
     <h1>Create an account 🚀</h1>
   </div>
@@ -6,7 +6,26 @@
   <div class="input-sections">
     <div class="input-group">
       <label for="name">Name <span class="text-warning">*</span></label>
-      <input type="text" name="name" id="name" placeholder="Enter your name" />
+      <input
+        formControlName="username"
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Enter your name"
+        [style]="{
+          borderColor:
+            signUpForm.get('username')?.invalid &&
+            signUpForm.get('username')?.touched
+              ? '#EC5757'
+              : ''
+        }"
+      />
+      <!-- Error message -->
+      @if(signUpForm.get('username')?.invalid &&
+      signUpForm.get('username')?.touched){
+      @if(signUpForm.get('username')?.errors?.['required']){
+      <small class="text-warning">Username is required</small>
+      } }
     </div>
     <div class="input-group">
       <label for="email">Email <span class="text-warning">*</span></label>
@@ -14,27 +33,51 @@
         type="email"
         name="email"
         id="email"
+        formControlName="email"
         placeholder="Enter your email"
+        [style]="{
+          borderColor:
+            signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched
+              ? '#EC5757'
+              : ''
+        }"
       />
-    </div>
-    <div class="input-group">
-      <label for="password">Password <span class="text-warning">*</span></label>
-      <input
-        type="password"
-        name="password"
-        id="password"
-        placeholder="Enter your password"
-      />
-    </div>
 
+      <!-- Error message -->
+      @if(signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched){
+      @if(signUpForm.get('email')?.errors?.['required']){
+      <small class="text-warning">Email is required</small>
+      } @if(signUpForm.get('email')?.errors?.['email']){
+      <small class="text-warning">Invalid email format</small>
+      } }
+    </div>
     <div class="input-group">
       <label for="country">Country <span class="text-warning">*</span></label>
-      <select name="country" id="country">
-        <option value="india">India</option>
-        <option value="usa">USA</option>
-        <option value="uk">UK</option>
-        <option value="australia">Australia</option>
+      <select
+        name="country"
+        id="country"
+        formControlName="country"
+        [style]="{
+          borderColor:
+            signUpForm.get('country')?.invalid &&
+            signUpForm.get('country')?.touched
+              ? '#EC5757'
+              : ''
+        }"
+        (change)="setCurrency()"
+      >
+        @for(country of countries; track country) {
+        <option [value]="country.name">
+          {{ country.name }} ({{ country.currency }})
+        </option>
+        }
       </select>
+
+      <!-- Error message -->
+      @if(signUpForm.get('country')?.invalid &&
+      signUpForm.get('country')?.touched){
+      <small class="text-warning">Country is required</small>
+      }
     </div>
 
     <div class="input-group">
@@ -44,7 +87,24 @@
         name="password"
         id="password"
         placeholder="Enter your password"
+        formControlName="password"
+        [style]="{
+          borderColor:
+            signUpForm.get('password')?.invalid &&
+            signUpForm.get('password')?.touched
+              ? '#EC5757'
+              : ''
+        }"
       />
+
+      <!-- Error message -->
+      @if(signUpForm.get('password')?.invalid &&
+      signUpForm.get('password')?.touched){
+      @if(signUpForm.get('password')?.errors?.['required']){
+      <small class="text-warning">Password is required</small>
+      } @if(signUpForm.get('password')?.errors?.['minlength']){
+      <small class="text-warning">Password must be at least 6 characters</small>
+      }}
     </div>
 
     <div class="input-group">
@@ -56,11 +116,33 @@
         name="confirm-password"
         id="confirm-password"
         placeholder="Confirm your password"
+        formControlName="confirmPassword"
+        [style]="{
+          borderColor:
+            signUpForm.hasError('mismatch') &&
+            signUpForm.get('confirmPassword')?.touched
+              ? '#EC5757'
+              : ''
+        }"
       />
+      @if(signUpForm.hasError('mismatch') &&
+      signUpForm.get('confirmPassword')?.touched){
+      <small class="text-warning">Passwords do not match.</small>
+      }
     </div>
 
     <!-- login button -->
-    <button type="submit" class="btn-primary">Create Account</button>
+    <button type="submit" class="btn-primary">
+      @if(signUpLoading) {
+      <p-progressSpinner
+        aria-label="Loading"
+        styleClass="w-4rem h-4rem"
+        strokeWidth="4"
+        fill="var(--clr-surface)"
+        animationDuration=".5s"
+      />
+      Signing up... } @else { Sign up }
+    </button>
 
     <p class="have-an-account">
       Have an account already ?
