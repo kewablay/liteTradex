@@ -20,7 +20,7 @@ import { AsyncPipe } from '@angular/common';
 export class SidebarComponent {
   @Output() onTabChange = new EventEmitter<Event>();
   isAdmin!: boolean;
-  currentUser$!: Observable<DocumentData>;
+  currentUser$!: Observable<DocumentData | undefined>;
 
   handleTabChange(): void {
     this.onTabChange.emit();
@@ -67,12 +67,13 @@ export class SidebarComponent {
     private authService: AuthService,
     @Inject(NOTYF) private notyf: Notyf
   ) {
-    this.currentUser$ = this.userService.getUserById(
-      this.userService.getCurrentUserId()
-    );
+   
   }
 
   ngOnInit() {
+    this.currentUser$ = this.userService.getUserById(
+      this.userService.getCurrentUserId()
+    );
     this.userService.getUserRole().subscribe((role) => {
       this.isAdmin = role === 'ADMIN';
     });
