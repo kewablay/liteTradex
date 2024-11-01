@@ -23,6 +23,7 @@ export class BalanceFormComponent {
   @Input() balance!: Wallet;
   @Input() userId!: string;
   @Output() onClose = new EventEmitter<void>();
+  updateBalanceLoading: boolean = false;
 
   blanceForm: FormGroup;
 
@@ -46,6 +47,9 @@ export class BalanceFormComponent {
 
   onSubmit(): void {
     if (this.blanceForm.valid) {
+      // show loading
+      this.updateBalanceLoading = true;
+
       console.log('balance value: ', this.blanceForm.value);
       // this.blanceForm.value();
       if (this.dialogType === 'main-wallet') {
@@ -53,24 +57,28 @@ export class BalanceFormComponent {
           .updateUserMainBalance(this.userId, this.blanceForm.value)
           .subscribe({
             next: () => {
+              this.updateBalanceLoading = false;
               this.notyf.success('Balance updated successfully.');
               this.onClose.emit();
             },
             error: (error: Error) => {
+              this.updateBalanceLoading = false;
               this.notyf.error(error);
               console.log("error updating main balance: ", error);
               this.onClose.emit();
             },
           });
-      } else if (this.dialogType === 'profit-wallet') {
-        this.userService
+        } else if (this.dialogType === 'profit-wallet') {
+          this.userService
           .updateUserProfitBalance(this.userId, this.blanceForm.value)
           .subscribe({
             next: () => {
+              this.updateBalanceLoading = false;
               this.notyf.success('Balance updated successfully.');
               this.onClose.emit();
             },
             error: (error: Error) => {
+              this.updateBalanceLoading = false;
               this.notyf.error(error);
               console.log("error updating profit balance: ", error);
               this.onClose.emit();
