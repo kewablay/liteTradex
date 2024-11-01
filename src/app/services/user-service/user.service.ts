@@ -49,8 +49,13 @@ export class UserService {
     return this.localStorageService.getItem('user')?.uid;
   }
 
+  getCurrentUserCurrency(): string  {
+    return this.localStorageService.getItem('user')?.balance.mainWallet
+      .currency;
+  }
+
   getUserById(uid: string | undefined): Observable<DocumentData | undefined> {
-    console.log("getting user by id : ", uid);
+    console.log('getting user by id : ', uid);
     const usersCollection = collection(this.firestore, 'users');
     const q = query(usersCollection, where('uid', '==', uid));
 
