@@ -50,6 +50,7 @@ export class UserService {
   }
 
   getUserById(uid: string | undefined): Observable<DocumentData | undefined> {
+    console.log("getting user by id : ", uid);
     const usersCollection = collection(this.firestore, 'users');
     const q = query(usersCollection, where('uid', '==', uid));
 
