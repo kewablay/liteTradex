@@ -247,7 +247,6 @@ input, select
             #user-name
                 @include flex($direction: row, $gap:.7rem )
                 text-transform: capitalize
-                
 
         #actions
             // display: flex
@@ -327,8 +326,11 @@ input, select
     width: 2rem !important
     height: 2rem !important
 
-
 #card
     .p-button
         outline: white
         color: white
+
+button[type="submit"]::disabled
+    cursor: not-allowed !important
+    opacity: .4 !important
