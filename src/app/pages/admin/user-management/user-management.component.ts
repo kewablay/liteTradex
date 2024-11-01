@@ -5,6 +5,10 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { UserService } from '../../../services/user-service/user.service';
+import { DocumentData } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-management',
@@ -15,11 +19,13 @@ import { ConfirmationService } from 'primeng/api';
     AvatarModule,
     ConfirmDialogModule,
     RouterLink,
+    AsyncPipe,
   ],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.sass',
 })
 export class UserManagementComponent {
+  users$!: Observable<DocumentData[]>;
   users = [
     {
       id: 1,
@@ -53,7 +59,13 @@ export class UserManagementComponent {
     },
   ];
 
-  constructor(private confirmationService: ConfirmationService, private router: Router) {}
+  constructor(
+    private confirmationService: ConfirmationService,
+    private router: Router,
+    private userService: UserService
+  ) {
+    this.users$ = this.userService.getUsers();
+  }
 
   confirmDelete(user: string) {
     this.confirmationService.confirm({
@@ -64,7 +76,7 @@ export class UserManagementComponent {
       rejectButtonStyleClass: 'btn btn-secondary-light',
       acceptButtonStyleClass: 'btn btn-warning',
       accept: () => {
-        // delete user 
+        // delete user
         // show toast notification for deletion status
         this.router.navigate(['/admin/user-management']);
       },
