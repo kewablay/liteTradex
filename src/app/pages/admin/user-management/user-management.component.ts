@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
@@ -9,6 +9,8 @@ import { UserService } from '../../../services/user-service/user.service';
 import { DocumentData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { Notyf } from 'notyf';
+import { NOTYF } from '../../../utils/notyf.token';
 
 @Component({
   selector: 'app-user-management',
@@ -26,48 +28,17 @@ import { AsyncPipe } from '@angular/common';
 })
 export class UserManagementComponent {
   users$!: Observable<DocumentData[]>;
-  users = [
-    {
-      id: 1,
-      name: 'Laurene Jay',
-      email: 'laureneJay@gmail.com',
-      avatarLabel: 'L',
-    },
-    {
-      id: 2,
-      name: 'Michael Smith',
-      email: 'michaelSmith@example.com',
-      avatarLabel: 'M',
-    },
-    {
-      id: 3,
-      name: 'Sarah Connor',
-      email: 'sarahConnor@example.com',
-      avatarLabel: 'S',
-    },
-    {
-      id: 4,
-      name: 'Emma Stone',
-      email: 'emmaStone@example.com',
-      avatarLabel: 'E',
-    },
-    {
-      id: 5,
-      name: 'John Doe',
-      email: 'johnDoe@example.com',
-      avatarLabel: 'J',
-    },
-  ];
 
   constructor(
     private confirmationService: ConfirmationService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService, 
+    @Inject(NOTYF) private notyf: Notyf
   ) {
     this.users$ = this.userService.getUsers();
   }
 
-  confirmDelete(user: string) {
+  confirmDelete(user: string, userId: string) {
     this.confirmationService.confirm({
       header: 'Confirm Deletion',
       message: `Are you sure you want to delete user "${user}" ? This action cannot be undone.`,
@@ -78,7 +49,15 @@ export class UserManagementComponent {
       accept: () => {
         // delete user
         // show toast notification for deletion status
-        this.router.navigate(['/admin/user-management']);
+        this.userService.deleteUser(userId).subscribe({
+          next: () => {
+            this.router.navigate(['/admin/user-management']);
+            this.notyf.success('User deleted successfully');
+          },
+          error: (error: Error) => {
+            this.notyf.error(error.message);
+          }
+        });
       },
       // reject: () => {
       //   this.messageService.add({
@@ -97,9 +76,9 @@ export class UserManagementComponent {
     e.stopPropagation();
   }
 
-  handleDelete(e: Event, user: string): void {
+  handleDelete(e: Event, user: string, userId: string): void {
     e.stopPropagation();
-    this.confirmDelete(user);
+    this.confirmDelete(user, userId);
     // Open confirm delete Modal
     // delte user
   }
