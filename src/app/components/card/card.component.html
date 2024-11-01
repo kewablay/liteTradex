@@ -23,7 +23,7 @@
   </div>
 
   <div class="card-body">
-    <h2>${{balance}}</h2>
+    <h2>{{balance['currency']}} {{balance['amount'] | number: '1.2-2'}}</h2>
   </div>
 
   <div class="card-footer">
