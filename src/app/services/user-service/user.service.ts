@@ -3,6 +3,7 @@ import { Auth, user, User } from '@angular/fire/auth';
 import {
   collection,
   doc,
+  DocumentData,
   Firestore,
   getDoc,
   getDocs,
@@ -53,5 +54,13 @@ export class UserService {
       catchError(() => of(undefined))
     );
   }
-  
+
+  getUsers(): Observable<DocumentData[]> {
+    const usersCollection = collection(this.firestore, 'users');
+    return from(getDocs(usersCollection)).pipe(
+      map((snapshot) => {
+        return snapshot.docs.map((doc) => doc.data() as DocumentData);
+      })
+    );
+  }
 }
