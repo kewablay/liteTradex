@@ -22,6 +22,7 @@
           <th>Exchange Name</th>
           <th>Amount</th>
           <th>Wallet Address</th>
+          <th>Status</th>
           <th>Actions</th>
         </tr>
       </ng-template>
@@ -33,6 +34,7 @@
           </td>
           <td>{{ withdrawal["currency"] }} {{ withdrawal["amount"] }}</td>
           <td>{{ withdrawal["walletAddress"] }}</td>
+          <td>{{ withdrawal["status"] }}</td>
           <td id="actions">
             <p-button
             icon="pi pi-check-square"

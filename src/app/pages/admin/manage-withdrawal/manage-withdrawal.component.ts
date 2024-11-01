@@ -67,7 +67,7 @@ export class ManageWithdrawalComponent {
         // delete user
         // show toast notification for deletion status
         // this.router.navigate(['/admin/manage-withdrawal']);
-        this.withdrawalService.updateWithdrawalStatus(withdrawalId, "reject").subscribe({
+        this.withdrawalService.updateWithdrawalStatus(withdrawalId, "rejected").subscribe({
           next: () => {
             this.notyf.success('Withdrawal rejected successfully');
           },
@@ -99,7 +99,7 @@ export class ManageWithdrawalComponent {
         // delete user
         // show toast notification for deletion status
         // this.router.navigate(['/admin/manage-withdrawal']);
-        this.withdrawalService.updateWithdrawalStatus(withdrawalId, "approve").subscribe({
+        this.withdrawalService.updateWithdrawalStatus(withdrawalId, "approved").subscribe({
           next: () => {
             this.notyf.success('Withdrawal approved');
           },
