@@ -24,6 +24,7 @@ import {
   throwError,
 } from 'rxjs';
 import { LocalStorageService } from '../local-storage-service/local-storage.service';
+import { Wallet } from '../../models/app.model';
 
 @Injectable({
   providedIn: 'root',
@@ -100,7 +101,8 @@ export class UserService {
     );
   }
 
-  updateUserMainBalance(userId: string, balance: any): Observable<void> {
+
+  updateUserMainBalance(userId: string, balance: Wallet): Observable<void> {
     console.log('update data: ', balance, userId);
     const usersCollection = collection(this.firestore, 'users');
     const q = query(usersCollection, where('uid', '==', userId));
@@ -122,7 +124,7 @@ export class UserService {
     );
   }
 
-  updateUserProfitBalance(userId: string, balance: any): Observable<void> {
+  updateUserProfitBalance(userId: string, balance: Wallet): Observable<void> {
     const usersCollection = collection(this.firestore, 'users');
     const q = query(usersCollection, where('uid', '==', userId));
 
