@@ -1,8 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
 import { UserService } from '../../services/user-service/user.service';
 import { AuthService } from '../../services/auth-service/auth-service.service';
+import { Notyf } from 'notyf';
+import { NOTYF } from '../../utils/notyf.token';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,7 +15,7 @@ import { AuthService } from '../../services/auth-service/auth-service.service';
 })
 export class SidebarComponent {
   @Output() onTabChange = new EventEmitter<Event>();
-  isAdmin = true;
+  isAdmin!: boolean;
 
   handleTabChange(): void {
     this.onTabChange.emit();
@@ -57,7 +59,8 @@ export class SidebarComponent {
 
   constructor(
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    @Inject(NOTYF) private notyf: Notyf
   ) {}
 
   ngOnInit() {
@@ -68,5 +71,6 @@ export class SidebarComponent {
 
   handleLogout() {
     this.authService.logout();
+    this.notyf.success('Logged out.');
   }
 }
