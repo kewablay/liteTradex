@@ -56,7 +56,7 @@ export class ManageWithdrawalComponent {
     @Inject(NOTYF) private notyf: Notyf
   ) {}
 
-  confirmRejectWithdrawal(user: string, amount: string, currency: string, withdrawalId: string) {
+  confirmRejectWithdrawal(user: string, amount: string, currency: string, withdrawalId: string, status: string) {
     this.confirmationService.confirm({
       header: 'Reject Withdrawal',
       message: `Are you sure you want to reject withdrawal of "${currency} ${amount}" from "${user}" ? This action cannot be undone.`,
@@ -68,6 +68,10 @@ export class ManageWithdrawalComponent {
         // delete user
         // show toast notification for deletion status
         // this.router.navigate(['/admin/manage-withdrawal']);
+        if(status === 'approved') {
+          this.notyf.error('Withdrawal already approved');
+          return;
+        }
         this.withdrawalService.updateWithdrawalStatus(withdrawalId, "rejected").subscribe({
           next: () => {
             this.notyf.success('Withdrawal rejected successfully');
