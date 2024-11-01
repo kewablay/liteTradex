@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { CardComponent } from '../../../components/card/card.component';
 import { TableModule } from 'primeng/table';
 import { BadgeModule } from 'primeng/badge';
-import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe, DatePipe } from '@angular/common';
 import { DocumentData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UserService } from '../../../services/user-service/user.service';
+import { WithdrawalService } from '../../../services/withdrawal-service/withdrawal.service';
 
 interface Transaction {
   id: string;
@@ -19,12 +20,21 @@ interface Transaction {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CardComponent, TableModule, BadgeModule, CurrencyPipe, AsyncPipe],
+  imports: [
+    CardComponent,
+    TableModule,
+    BadgeModule,
+    CurrencyPipe,
+    AsyncPipe,
+    AsyncPipe,
+    DatePipe,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.sass',
 })
 export class HomeComponent {
   user$!: Observable<DocumentData | undefined>;
+  withdrawalRequests$!: Observable<DocumentData[]>;
   transactions: Transaction[] = [
     {
       id: '#1',
@@ -52,11 +62,18 @@ export class HomeComponent {
     },
   ];
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private withdrawalService: WithdrawalService
+  ) {}
 
   ngOnInit(): void {
     this.user$ = this.userService.getUserById(
       this.userService.getCurrentUserId()
+    );
+
+    this.withdrawalRequests$ = this.withdrawalService.getWithdrawalsByUserId(
+      this.userService.getCurrentUserId() as string
     );
   }
 
