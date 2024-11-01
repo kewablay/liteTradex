@@ -3,6 +3,7 @@ import {
   addDoc,
   collection,
   collectionData,
+  deleteDoc,
   doc,
   DocumentData,
   Firestore,
@@ -59,5 +60,10 @@ export class WithdrawalService {
   ): Observable<void> {
     const withdrawalDocRef = doc(this.firestore, 'withdrawal', withdrawalId);
     return from(updateDoc(withdrawalDocRef, { status: status }));
+  }
+
+  deleteWithdrawal(withdrawalId: string): Observable<void> {
+    const withdrawalDocRef = doc(this.firestore, 'withdrawal', withdrawalId);
+    return from(deleteDoc(withdrawalDocRef));
   }
 }
