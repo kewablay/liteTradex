@@ -88,7 +88,7 @@ export class ManageWithdrawalComponent {
       // },
     });
   }
-  confirmApproveWithdrawal(user: string, amount: string, currency: string, withdrawalId: string) {
+  confirmApproveWithdrawal(user: string, amount: string, currency: string, withdrawalId: string, userId: string) {
     this.confirmationService.confirm({
       header: 'Approve Withdrawal',
       message: `Are you sure you want to approve withdrawal of "${currency} ${amount}" from "${user}" ? This action cannot be undone.`,
@@ -100,7 +100,7 @@ export class ManageWithdrawalComponent {
         // delete user
         // show toast notification for deletion status
         // this.router.navigate(['/admin/manage-withdrawal']);
-        this.withdrawalService.updateWithdrawalStatus(withdrawalId, "approved").subscribe({
+        this.withdrawalService.approveWithdrawal(withdrawalId, userId, amount).subscribe({
           next: () => {
             this.notyf.success('Withdrawal approved');
           },
