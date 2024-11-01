@@ -24,7 +24,7 @@ interface Transaction {
   styleUrl: './home.component.sass',
 })
 export class HomeComponent {
-  currentUser$!: Observable<DocumentData | undefined>;
+  user$!: Observable<DocumentData | undefined>;
   transactions: Transaction[] = [
     {
       id: '#1',
@@ -54,8 +54,8 @@ export class HomeComponent {
 
   constructor(private userService: UserService) {}
 
-  ngOninit(): void {
-    this.currentUser$ = this.userService.getUserById(
+  ngOnInit(): void {
+    this.user$ = this.userService.getUserById(
       this.userService.getCurrentUserId()
     );
   }

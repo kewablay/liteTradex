@@ -49,7 +49,6 @@ export class LoginComponent {
         .then((res) => {
           // Store user's auth token in cookies
           res.user?.getIdToken().then((token) => {
-            console.log('token from login: ', token);
             if (token) {
               this.cookieService.set('AUTH_TOKEN', token, {
                 path: '/',
@@ -58,13 +57,13 @@ export class LoginComponent {
               } as CookieOptions);
             }
           });
-          
+
           // Store user's role in cookie and user in localStorage
           this.userService.getUserById(res.user.uid).subscribe({
             next: (user) => {
               if (user) {
                 this.localStorageService.setItem('user', user);
-                console.log('user from user service: ', user);
+                // console.log('user from user service: ', user);
                 this.cookieService.set('USER_ROLE', user['role'], {
                   path: '/',
                   secure: true,
@@ -72,11 +71,7 @@ export class LoginComponent {
                 } as CookieOptions);
                 // Update user role in user service
                 this.userService.setUserRole(user['role']);
-    
-                // Show Login successful
-                this.loginLoading = false;
-                this.notyf.success('Login successful');
-    
+
                 // Navigate to dashboard based on the users role
                 if (user['role'] === 'ADMIN') {
                   this.router.navigate(['dashboard/admin/user-management']);
@@ -84,11 +79,15 @@ export class LoginComponent {
                   this.router.navigate(['dashboard/home']);
                 }
               }
-            }, 
+            },
             error: (error) => {
               console.log('error getting user: ', error.message);
-            }
+            },
           });
+
+          // Show Login successful
+          this.loginLoading = false;
+          this.notyf.success('Login successful');
         })
         .catch((error: Error) => {
           this.loginLoading = false;

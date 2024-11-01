@@ -3,10 +3,10 @@
     <h1>Dashboard</h1>
   </div>
 
-  @if(currentUser$ | async; as currentUser){
+  @if(user$ | async; as user){
   <div class="content">
     <div class="balances">
-      @if (currentUser['balance']; as balance) {
+      @if (user['balance']; as balance) {
       <app-card [cardTitle]="'Main Wallet'" [balance]="balance['mainWallet']" />
       <app-card
         [cardTitle]="'Profit Wallet'"

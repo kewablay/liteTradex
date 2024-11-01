@@ -86,7 +86,7 @@ export class SignupComponent {
           },
           (error: Error) => {
             this.signUpLoading = false;
-            this.notyf.error('Error occured while signing up.');
+            this.notyf.error(error.message);
             console.log('error from signup', error);
           }
         );
