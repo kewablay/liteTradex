@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { CardComponent } from '../../../components/card/card.component';
 import { TableModule } from 'primeng/table';
 import { BadgeModule } from 'primeng/badge';
-import { CurrencyPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { DocumentData } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { UserService } from '../../../services/user-service/user.service';
 
 interface Transaction {
   id: string;
@@ -16,11 +19,12 @@ interface Transaction {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CardComponent, TableModule, BadgeModule, CurrencyPipe],
+  imports: [CardComponent, TableModule, BadgeModule, CurrencyPipe, AsyncPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.sass',
 })
 export class HomeComponent {
+  currentUser$!: Observable<DocumentData>;
   transactions: Transaction[] = [
     {
       id: '#1',
@@ -48,6 +52,12 @@ export class HomeComponent {
     },
 
   ];
+
+  constructor(private userService: UserService){
+    this.currentUser$ = this.userService.getUserById(
+      this.userService.getCurrentUserId()
+    );
+  }
 
   // transactions: Transaction[] = [];
 }

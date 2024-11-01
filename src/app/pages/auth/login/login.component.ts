@@ -12,6 +12,7 @@ import {
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { UserService } from '../../../services/user-service/user.service';
 import { CookieOptions, CookieService } from 'ngx-cookie-service';
+import { LocalStorageService } from '../../../services/local-storage-service/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +31,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private cookieService: CookieService,
+    private localStorageService: LocalStorageService,
     @Inject(NOTYF) private notyf: Notyf
   ) {
     this.loginForm = this.fb.group({
@@ -56,29 +58,35 @@ export class LoginComponent {
               } as CookieOptions);
             }
           });
-
-          // Store user's role in cookie
-          this.userService.getUserById(res.user.uid).then((user) => {
-            if (user) {
-              console.log('user from user service: ', user);
-              this.cookieService.set('USER_ROLE', user['role'], {
-                path: '/',
-                secure: true,
-                httpOnly: true,
-              } as CookieOptions);
-            }
-            // Update user role in user service
-            this.userService.setUserRole(user['role']);
-
-            // Show Login successful
-            this.loginLoading = false;
-            this.notyf.success('Login successful');
-
-            // Navigate to dashboard based on the users role
-            if (user['role'] === 'ADMIN') {
-              this.router.navigate(['dashboard/admin/user-management']);
-            } else {
-              this.router.navigate(['dashboard/home']);
+          
+          // Store user's role in cookie and user in localStorage
+          this.userService.getUserById(res.user.uid).subscribe({
+            next: (user) => {
+              if (user) {
+                this.localStorageService.setItem('user', user);
+                console.log('user from user service: ', user);
+                this.cookieService.set('USER_ROLE', user['role'], {
+                  path: '/',
+                  secure: true,
+                  httpOnly: true,
+                } as CookieOptions);
+              }
+              // Update user role in user service
+              this.userService.setUserRole(user['role']);
+  
+              // Show Login successful
+              this.loginLoading = false;
+              this.notyf.success('Login successful');
+  
+              // Navigate to dashboard based on the users role
+              if (user['role'] === 'ADMIN') {
+                this.router.navigate(['dashboard/admin/user-management']);
+              } else {
+                this.router.navigate(['dashboard/home']);
+              }
+            }, 
+            error: (error) => {
+              console.log('error getting user: ', error.message);
             }
           });
         })

@@ -3,10 +3,17 @@
     <h1>Dashboard</h1>
   </div>
 
+  @if(currentUser$ | async; as currentUser){
   <div class="content">
     <div class="balances">
-      <app-card [cardTitle]="'Main Wallet'" [balance]="'2,520.00'" />
-      <app-card [cardTitle]="'Profit Wallet'" [balance]="'220.00'" />
+      @if (currentUser['balance']; as balance) {
+      <app-card [cardTitle]="'Main Wallet'" [balance]="balance['mainWallet']" />
+      <app-card
+        [cardTitle]="'Profit Wallet'"
+        [balance]="balance['profitWallet']"
+      />
+
+      }
     </div>
     <div class="transaction-history">
       <p-table
@@ -44,5 +51,6 @@
       </p-table>
     </div>
   </div>
+
+  }
 </main>
- 

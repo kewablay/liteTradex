@@ -4,10 +4,11 @@
     <img src="assets/icons/logo.svg" alt="" />
   </div>
 
+  @if(currentUser$ | async; as currentUser){
   <!-- Profile -->
   <div class="profile">
     <p-avatar
-      image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+      [image]="currentUser['avatarUrl']"
       styleClass="avatar"
       size="xlarge"
       shape="circle"
@@ -15,8 +16,8 @@
 
     <!-- Profile Info -->
     <div class="profile-info">
-      <h3>Hi, Laurene</h3>
-      <span> laureneJay&#64;gmail.com </span>
+      <h3>Hi, {{ currentUser['username'] }}</h3>
+      <span> {{ currentUser['email'] }} </span>
     </div>
     <!-- Profile Info ends-->
   </div>
@@ -30,6 +31,7 @@
     </div>
   </div>
   <!-- Membership Ends -->
+  }
 
   <!-- Sidebar Tabs  -->
   <div class="tabs">
