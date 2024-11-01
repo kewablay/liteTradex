@@ -15,41 +15,43 @@
 
       }
     </div>
+
+    @if(withdrawalRequests$ | async; as withdrawalRequests){
     <div class="transaction-history">
       <p-table
         #dt
-        [value]="transactions"
+        [value]="withdrawalRequests"
         [tableStyle]="{ 'min-width': '50rem' }"
         emptyMessage="No transactions available"
       >
         <ng-template pTemplate="caption">
           <div class="table-caption">
-            Transaction History
-            <span>Total: <p-badge [value]="transactions.length" /></span>
+            Withdrawal History
+            <span>Total: <p-badge [value]="withdrawalRequests.length" /></span>
           </div>
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
-            <th>Transaction Id</th>
-            <th>Type</th>
+            <th>ID</th>
+            <th>Exchange Name</th>
             <th>Amount</th>
-            <th>Fee</th>
             <th>Status</th>
-            <th>Gateway</th>
+            <th>Issued Date</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-transaction>
+        <ng-template pTemplate="body" let-withdrawal let-rowIndex="rowIndex">
           <tr>
-            <td>{{ transaction.id }}</td>
-            <td>{{ transaction.type }}</td>
-            <td>{{ transaction.amount | currency }}</td>
-            <td>{{ transaction.fee | currency }}</td>
-            <td>{{ transaction.status }}</td>
-            <td>{{ transaction.gateway }}</td>
+            <td>#{{rowIndex + 1 }}</td>
+            <td>{{ withdrawal["exchangeName"] }}</td>
+            <td>{{ withdrawal["currency"] }} {{ withdrawal["amount"] }}</td>
+            <td>{{ withdrawal["status"]}}</td>
+            <td>{{ withdrawal["createdAt"] | date }}</td>
           </tr>
         </ng-template>
       </p-table>
     </div>
+
+    }
   </div>
 
   }

@@ -4,7 +4,7 @@
   </div>
   <div class="content">
     <!-- Form and review section  -->
-    <form #addFundsForm="ngForm">
+    <form #withdrawForm="ngForm">
       <!-- Input sections -->
       <div class="input-sections">
         <div class="input-group">
@@ -54,7 +54,7 @@
           </div>
           <div class="review-item">
             <p>Total Amount</p>
-            <span>{{ amount ? "$" + amount : "" }}</span>
+            <span>{{ amount ? currency + " " + amount : "" }}</span>
           </div>
         </div>
       </div>
@@ -63,7 +63,8 @@
       <button
         type="submit"
         class="btn-primary"
-        [disabled]="addFundsForm.invalid"
+        [disabled]="withdrawForm.invalid"
+        (click)="handleWithdraw()"
       >
         Proceed to withdraw
       </button>
