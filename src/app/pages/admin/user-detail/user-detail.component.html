@@ -9,20 +9,24 @@
     ></p-button>
   </div>
 
+  @if(user$ | async; as user){
   <div class="content">
     <div class="balances">
-      <!-- <app-card
+      @if (user['balance']; as balance) {
+      <app-card
         [isAdminCard]="true"
         [cardTitle]="'Main Wallet'"
-        [balance]="'2,520.00'"
+        [balance]="balance['mainWallet']"
         (onEdit)="showDialog('main-wallet')"
       />
       <app-card
         [isAdminCard]="true"
         [cardTitle]="'Profit Wallet'"
-        [balance]="'220.00'"
+        [balance]="balance['profitWallet']"
         (onEdit)="showDialog('profit-wallet')"
-      /> -->
+      />
+
+      }
     </div>
 
     <div class="personal-info">
@@ -32,24 +36,26 @@
         <div class="review">
           <div class="review-item">
             <p>Name</p>
-            <span>Laurene Jay </span>
+            <span>{{user['username']}} </span>
           </div>
           <div class="review-item">
             <p>Email</p>
-            <span>laureneJay&#64;gmail.com</span>
+            <span>{{user['email']}}</span>
           </div>
           <div class="review-item">
             <p>Country</p>
-            <span>USA</span>
+            <span>{{user['country']}}</span>
           </div>
           <div class="review-item">
             <p>Joined on</p>
-            <span>25th September, 2024</span>
+            <span>{{user['createdAt'] | date  }}</span>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  }
 </main>
 
 <!-- dialoge  -->
