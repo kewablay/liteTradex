@@ -12,7 +12,7 @@
       [tableStyle]="{ 'min-width': '50rem' }"
       emptyMessage="No transactions available"
       [paginator]="true"
-      [rows]="10"
+      [rows]="5"
       [showCurrentPageReport]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       [rowsPerPageOptions]="[10, 25, 50]"
@@ -61,7 +61,8 @@
               styleClass="edit-btn"
               rounded="true"
               size="small"
-              severity="danger"
+              severity="warning"
+              id="delete-button"
               (onClick)="
                 confirmRejectWithdrawal(
                   withdrawal['exchangeName'],
@@ -70,6 +71,22 @@
                   withdrawal['id']
                 )
               "
+            />
+            <p-button
+              icon="pi pi-trash"
+              label="Del"
+              outlined="true"
+              styleClass="edit-btn"
+              rounded="true"
+              size="small"
+              severity="danger"
+              id="delete-button"
+              (click)="confirmDeleteWithdrawal(
+                withdrawal['exchangeName'],
+                withdrawal['amount'],
+                withdrawal['currency'],
+                withdrawal['id']
+              )"
             />
           </td>
         </tr>
