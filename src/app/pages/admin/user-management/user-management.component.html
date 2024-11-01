@@ -3,6 +3,7 @@
     <h1>Users</h1>
   </div>
 
+  @if(users$ | async; as users){
   <!-- Users list -->
   <div class="users-list">
     <p-table
@@ -25,12 +26,14 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-user>
-        <tr routerLink="/dashboard/admin/user-detail/{{ user.id }}">
-          <td id="user-name">
-            <p-avatar label="P" styleClass="mr-2" size="large" shape="circle" />
-            {{ user.name }}
+        <tr routerLink="/dashboard/admin/user-detail/{{ user['uid'] }}">
+          <td >
+            <div id="user-name">
+              <p-avatar [image]="user['avatarUrl']" size="large" shape="circle" />
+            {{ user['username'] }}
+            </div>
           </td>
-          <td>{{ user.email }}</td>
+          <td>{{ user['email'] }}</td>
           <td id="actions">
             <p-button
               icon="pi pi-pen-to-square"
@@ -59,6 +62,7 @@
       </ng-template>
     </p-table>
   </div>
+  }
 </main>
 
 <!-- Confirm Delete Dialog -->
