@@ -1,4 +1,4 @@
-<form class="balance-form">
+<form [formGroup]="blanceForm" (submit)="onSubmit()" class="balance-form">
   <div class="header modal-header">
     <h2>
       {{
@@ -20,19 +20,20 @@
         name="amount"
         id="amount"
         placeholder="Enter your amount"
-        required
+        formControlName="amount"
       />
     </div>
 
     <!-- Currency  -->
     <div class="input-group">
       <label for="currency">Currency</label>
-      <select name="currency" id="currency" required>
-        <option value="usd">USD</option>
-        <option value="inr">INR</option>
-        <option value="btc">BTC</option>
-        <option value="eth">ETH</option>
-      </select>
+      <input
+        type="text"
+        name="currency"
+        id="currency"
+        formControlName="currency"
+        readonly
+      />
     </div>
   </div>
 

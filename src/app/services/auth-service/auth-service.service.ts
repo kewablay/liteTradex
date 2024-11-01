@@ -13,7 +13,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-constructor(
+  constructor(
     private firestore: Firestore,
     private auth: Auth,
     private router: Router,
@@ -25,7 +25,7 @@ constructor(
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  async signUp(
+  signUp(
     email: string,
     username: string,
     password: string,
@@ -64,6 +64,7 @@ constructor(
   logout() {
     this.cookieService.delete('AUTH_TOKEN', '/');
     this.cookieService.delete('USER_ROLE', '/');
+    localStorage.removeItem('user');
     this.auth.signOut();
     this.router.navigate(['/auth/login']);
   }

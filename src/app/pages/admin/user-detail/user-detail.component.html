@@ -9,7 +9,7 @@
     ></p-button>
   </div>
 
-  @if(user$ | async; as user){
+@if(user$ | async; as user){
   <div class="content">
     <div class="balances">
       @if (user['balance']; as balance) {
@@ -17,13 +17,13 @@
         [isAdminCard]="true"
         [cardTitle]="'Main Wallet'"
         [balance]="balance['mainWallet']"
-        (onEdit)="showDialog('main-wallet')"
+        (onEdit)="showDialog('main-wallet', balance['mainWallet'])"
       />
       <app-card
         [isAdminCard]="true"
         [cardTitle]="'Profit Wallet'"
         [balance]="balance['profitWallet']"
-        (onEdit)="showDialog('profit-wallet')"
+        (onEdit)="showDialog('profit-wallet', balance['profitWallet'])"
       />
 
       }
@@ -36,19 +36,19 @@
         <div class="review">
           <div class="review-item">
             <p>Name</p>
-            <span>{{user['username']}} </span>
+            <span>{{ user["username"] }} </span>
           </div>
           <div class="review-item">
             <p>Email</p>
-            <span>{{user['email']}}</span>
+            <span>{{ user["email"] }}</span>
           </div>
           <div class="review-item">
             <p>Country</p>
-            <span>{{user['country']}}</span>
+            <span>{{ user["country"] }}</span>
           </div>
           <div class="review-item">
             <p>Joined on</p>
-            <span>{{user['createdAt'] | date  }}</span>
+            <span>{{ user["createdAt"] | date }}</span>
           </div>
         </div>
       </div>
@@ -66,6 +66,11 @@
   [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
 >
   <ng-template pTemplate="headless">
-    <app-balance-form (onClose)="closeDialog()" [dialogType]="dialogType" />
+    <app-balance-form
+      (onClose)="closeDialog()"
+      [balance]="dialogBalance"
+      [dialogType]="dialogType"
+      [userId]="userId"
+    />
   </ng-template>
 </p-dialog>
