@@ -13,9 +13,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  // private currentUser = new BehaviorSubject<any>(null);
-  // currentUser$ = this.currentUser.asObservable();
-  constructor(
+constructor(
     private firestore: Firestore,
     private auth: Auth,
     private router: Router,
