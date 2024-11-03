@@ -1,8 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { UserService } from '../../../services/user-service/user.service';
@@ -12,6 +12,8 @@ import { AsyncPipe } from '@angular/common';
 import { Notyf } from 'notyf';
 import { NOTYF } from '../../../utils/notyf.token';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-management',
@@ -23,21 +25,30 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ConfirmDialogModule,
     RouterLink,
     AsyncPipe,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    InputTextModule,
+    FormsModule,
   ],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.sass',
 })
 export class UserManagementComponent {
   users$!: Observable<DocumentData[]>;
+  @ViewChild('dt') dt!: Table;
+  searchTerm: string = '';
 
   constructor(
     private confirmationService: ConfirmationService,
     private router: Router,
-    private userService: UserService, 
+    private userService: UserService,
     @Inject(NOTYF) private notyf: Notyf
   ) {
     this.users$ = this.userService.getUsers();
+  }
+
+  onSearch(event: Event): void {
+    const searchValue = (event.target as HTMLInputElement).value;
+    this.dt.filterGlobal(searchValue, 'contains');
   }
 
   confirmDelete(user: string, userId: string) {
@@ -49,8 +60,6 @@ export class UserManagementComponent {
       rejectButtonStyleClass: 'btn btn-secondary-light',
       acceptButtonStyleClass: 'btn btn-warning',
       accept: () => {
-        // delete user
-        // show toast notification for deletion status
         this.userService.deleteUser(userId).subscribe({
           next: () => {
             this.router.navigate(['/admin/user-management']);
@@ -58,30 +67,18 @@ export class UserManagementComponent {
           },
           error: (error: Error) => {
             this.notyf.error(error.message);
-          }
+          },
         });
       },
-      // reject: () => {
-      //   this.messageService.add({
-      //     severity: 'error',
-      //     summary: 'Rejected',
-      //     detail: 'You have rejected',
-      //     life: 2000,
-      //   });
-      // },
     });
   }
 
   handleEdit(e: Event): void {
-    // Open edit Modal
-    // Edit user
     e.stopPropagation();
   }
 
   handleDelete(e: Event, user: string, userId: string): void {
     e.stopPropagation();
     this.confirmDelete(user, userId);
-    // Open confirm delete Modal
-    // delte user
   }
 }

@@ -1,18 +1,31 @@
 <main class="user-management content-wrapper">
   <div class="header">
     <h1>Users</h1>
+    <div class="search-bar">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          type="text"
+          id="search-input"
+          [(ngModel)]="searchTerm"
+          (input)="onSearch($event)"
+          placeholder="Search users..."
+          class="p-inputtext-sm"
+        />
+      </span>
+    </div>
   </div>
 
-  @if(users$ | async; as users){
-  <!-- Users list -->
+  @if(users$ | async; as users) {
   <div class="users-list">
     <p-table
       #dt
       [value]="users"
       [tableStyle]="{ 'min-width': '50rem' }"
-      emptyMessage="No transactions available"
+      emptyMessage="No users found"
       [paginator]="true"
       [rows]="5"
+      [globalFilterFields]="['username', 'email']"
       [showCurrentPageReport]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       [rowsPerPageOptions]="[5, 15, 50]"
@@ -27,13 +40,17 @@
       </ng-template>
       <ng-template pTemplate="body" let-user>
         <tr routerLink="/dashboard/admin/user-detail/{{ user['uid'] }}">
-          <td >
+          <td>
             <div id="user-name">
-              <p-avatar [image]="user['avatarUrl']" size="large" shape="circle" />
-            {{ user['username'] }}
+              <p-avatar
+                [image]="user['avatarUrl']"
+                size="large"
+                shape="circle"
+              />
+              {{ user["username"] }}
             </div>
           </td>
-          <td>{{ user['email'] }}</td>
+          <td>{{ user["email"] }}</td>
           <td id="actions">
             <p-button
               icon="pi pi-pen-to-square"
@@ -44,7 +61,6 @@
               size="small"
               severity="info"
             />
-
             <p-button
               icon="pi pi-trash"
               outlined="true"
@@ -62,33 +78,29 @@
       </ng-template>
     </p-table>
   </div>
-  }@else {
-    <div class="users-list">
-      <div class="custom-loader">
-        <div class="loader">
-          <p-progressSpinner
-            aria-label="Loading"
-            styleClass="loader-lg"
-            strokeWidth="4"
-            fill="var(--clr-surface)"
-            animationDuration=".5s"
-            [title]="'Loading contents...'"
-          />
-          <p>Loading contents...</p>
-        </div>
+  } @else {
+  <div class="users-list">
+    <div class="custom-loader">
+      <div class="loader">
+        <p-progressSpinner
+          aria-label="Loading"
+          styleClass="loader-lg"
+          strokeWidth="4"
+          fill="var(--clr-surface)"
+          animationDuration=".5s"
+          [title]="'Loading contents...'"
+        />
+        <p>Loading contents...</p>
       </div>
     </div>
-    }
+  </div>
+  }
 </main>
 
-<!-- Confirm Delete Dialog -->
 <p-confirmDialog>
   <ng-template pTemplate="message" let-message>
-    <div
-      class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border"
-    >
+    <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
       <p>{{ message.message }}</p>
     </div>
   </ng-template>
 </p-confirmDialog>
-<!-- Confirm Delete Dialog ends-->
