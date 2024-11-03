@@ -9,6 +9,8 @@ import { Observable, switchMap } from 'rxjs';
 import { UserService } from '../../../services/user-service/user.service';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { Wallet } from '../../../models/app.model';
+import { PersonalInfoComponent } from "../../../components/personal-info/personal-info.component";
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-user-detail',
@@ -21,7 +23,9 @@ import { Wallet } from '../../../models/app.model';
     BalanceFormComponent,
     AsyncPipe,
     DatePipe,
-  ],
+    PersonalInfoComponent, 
+    ProgressSpinnerModule
+],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.sass',
 })

@@ -9,7 +9,7 @@
     ></p-button>
   </div>
 
-@if(user$ | async; as user){
+  @if(user$ | async; as user){
   <div class="content">
     <div class="balances">
       @if (user['balance']; as balance) {
@@ -29,33 +29,24 @@
       }
     </div>
 
-    <div class="personal-info">
-      <!-- Review Section -->
-      <div class="review-section">
-        <h3>Personal Information</h3>
-        <div class="review">
-          <div class="review-item">
-            <p>Name</p>
-            <span>{{ user["username"] }} </span>
-          </div>
-          <div class="review-item">
-            <p>Email</p>
-            <span>{{ user["email"] }}</span>
-          </div>
-          <div class="review-item">
-            <p>Country</p>
-            <span>{{ user["country"] }}</span>
-          </div>
-          <div class="review-item">
-            <p>Joined on</p>
-            <span>{{ user["createdAt"] | date }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-personal-info [user]="user" />
   </div>
 
-  }
+  } @else {
+    <div class="custom-loader">
+      <div class="loader">
+        <p-progressSpinner
+          aria-label="Loading"
+          styleClass="loader-lg"
+          strokeWidth="4"
+          fill="var(--clr-surface)"
+          animationDuration=".5s"
+          [title]="'Loading contents...'"
+        />
+        <p>Loading contents...</p>
+      </div>
+    </div>
+    }
 </main>
 
 <!-- dialoge  -->
