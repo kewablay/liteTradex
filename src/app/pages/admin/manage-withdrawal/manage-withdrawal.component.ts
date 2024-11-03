@@ -12,6 +12,9 @@ import { AsyncPipe } from '@angular/common';
 import { Notyf } from 'notyf';
 import { NOTYF } from '../../../utils/notyf.token';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { UserService } from '../../../services/user-service/user.service';
+import { DialogModule } from 'primeng/dialog';
+import { PersonalInfoComponent } from '../../../components/personal-info/personal-info.component';
 
 @Component({
   selector: 'app-manage-withdrawal',
@@ -23,19 +26,29 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ConfirmDialogModule,
     AsyncPipe,
     ProgressSpinnerModule,
+    DialogModule,
+    PersonalInfoComponent,
+    AsyncPipe,
   ],
   templateUrl: './manage-withdrawal.component.html',
   styleUrl: './manage-withdrawal.component.sass',
 })
 export class ManageWithdrawalComponent {
   withdrawalRequests!: Observable<DocumentData[]>;
+  visible: boolean = false;
+  user$!: Observable<DocumentData | undefined>;
 
   constructor(
     private confirmationService: ConfirmationService,
     private router: Router,
     private withdrawalService: WithdrawalService,
+    private userService: UserService,
     @Inject(NOTYF) private notyf: Notyf
   ) {}
+
+  ngOnInit() {
+    this.withdrawalRequests = this.withdrawalService.getWithdrawals();
+  }
 
   confirmRejectWithdrawal(
     user: string,
@@ -161,7 +174,8 @@ export class ManageWithdrawalComponent {
     });
   }
 
-  ngOnInit() {
-    this.withdrawalRequests = this.withdrawalService.getWithdrawals();
+  showPersonalInfo(userId: string) {
+    this.visible = true;
+    this.user$ = this.userService.getUserById(userId);
   }
 }

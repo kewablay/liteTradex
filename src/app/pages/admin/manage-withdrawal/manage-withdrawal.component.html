@@ -28,7 +28,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-withdrawal>
-        <tr>
+        <tr (click)="showPersonalInfo(withdrawal['userId'])">
           <td id="user-name">
             <!-- <p-avatar label="P" styleClass="mr-2" size="large" shape="circle" /> -->
             {{ withdrawal["exchangeName"] }}
@@ -131,3 +131,17 @@
   </ng-template>
 </p-confirmDialog>
 <!-- Confirm Delete Dialog ends-->
+
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [dismissableMask]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+>
+  <ng-template pTemplate="headless">
+    @if(user$ | async; as user){
+    <app-personal-info [user]="user" />
+  }
+  </ng-template>
+</p-dialog>
