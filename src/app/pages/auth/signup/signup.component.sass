@@ -5,12 +5,13 @@
 form
     width: 100%
     margin-inline: auto
-    margin-top: 6%
+    margin-top: 15%
     max-width: 480px
     height: fit-content
     gap: 1.5rem
     +flex($direction: column)
     +breakpoint(large)
+        margin-top: 6%
         min-width: 430px
         width: 80%
 
@@ -43,3 +44,6 @@ form
 
 button[type="submit"]
     height: 55px
+
+input
+    width: 100% important

@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Notyf } from 'notyf';
 import { NOTYF } from '../../../utils/notyf.token';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-user-management',
@@ -22,6 +23,7 @@ import { NOTYF } from '../../../utils/notyf.token';
     ConfirmDialogModule,
     RouterLink,
     AsyncPipe,
+    ProgressSpinnerModule
   ],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.sass',
