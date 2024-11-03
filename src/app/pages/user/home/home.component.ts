@@ -7,6 +7,8 @@ import { DocumentData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UserService } from '../../../services/user-service/user.service';
 import { WithdrawalService } from '../../../services/withdrawal-service/withdrawal.service';
+import { SkeletonModule } from 'primeng/skeleton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 interface Transaction {
   id: string;
@@ -28,6 +30,8 @@ interface Transaction {
     AsyncPipe,
     AsyncPipe,
     DatePipe,
+    ProgressSpinnerModule, 
+    SkeletonModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.sass',
