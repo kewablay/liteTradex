@@ -1,0 +1,29 @@
+<div class="personal-info">
+  <!-- Review Section -->
+  <div class="review-section">
+    <h3>Personal Information</h3>
+    @if(user) {
+    <div class="review">
+      <div class="review-item">
+        <p>Name</p>
+        <span>{{ user["username"] }} </span>
+      </div>
+      <div class="review-item">
+        <p>Email</p>
+        <span>{{ user["email"] }}</span>
+      </div>
+      <div class="review-item">
+        <p>Country</p>
+        <span>{{ user["country"] }}</span>
+      </div>
+      <div class="review-item">
+        <p>Joined on</p>
+        <span>{{ user["createdAt"] | date }}</span>
+      </div>
+    </div>
+
+    } @else { 
+      loading...
+    }
+  </div>
+</div>
