@@ -9,11 +9,18 @@ import { LocalStorageService } from '../../services/local-storage-service/local-
 import { DocumentData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLinkActive, RouterLink, AvatarModule, AsyncPipe],
+  imports: [
+    RouterLinkActive,
+    RouterLink,
+    AvatarModule,
+    AsyncPipe,
+    SkeletonModule,
+  ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.sass',
 })
@@ -66,14 +73,13 @@ export class SidebarComponent {
     private userService: UserService,
     private authService: AuthService,
     @Inject(NOTYF) private notyf: Notyf
-  ) {
-   
-  }
+  ) {}
 
   ngOnInit() {
     this.currentUser$ = this.userService.getUserById(
       this.userService.getCurrentUserId()
     );
+    // check if user is admin
     this.userService.getUserRole().subscribe((role) => {
       this.isAdmin = role === 'ADMIN';
     });

@@ -11,52 +11,39 @@ import { WithdrawalService } from '../../../services/withdrawal-service/withdraw
 import { AsyncPipe } from '@angular/common';
 import { Notyf } from 'notyf';
 import { NOTYF } from '../../../utils/notyf.token';
-import { error } from 'console';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-manage-withdrawal',
   standalone: true,
-  imports: [TableModule, AvatarModule, ButtonModule, ConfirmDialogModule, AsyncPipe],
+  imports: [
+    TableModule,
+    AvatarModule,
+    ButtonModule,
+    ConfirmDialogModule,
+    AsyncPipe,
+    ProgressSpinnerModule,
+  ],
   templateUrl: './manage-withdrawal.component.html',
   styleUrl: './manage-withdrawal.component.sass',
 })
 export class ManageWithdrawalComponent {
   withdrawalRequests!: Observable<DocumentData[]>;
-  // withdrawalRequests = [
-  //   {
-  //     id: 1,
-  //     name: 'John Doe',
-  //     email: 'yqB5m@example.com',
-  //     walletAddress: '0x1234567890',
-  //     amount: 1000,
-  //     status: 'Pending',
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Jane Smith',
-  //     email: 'TtD3G@example.com',
-  //     walletAddress: '0x9876543210',
-  //     amount: 2000,
-  //     status: 'Approved',
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'Bob Johnson',
-  //     walletAddress: '0x3456789012',
-  //     email: 'Jpj9O@example.com',
-  //     amount: 3000,
-  //     status: 'Declined',
-  //   },
-  // ];
 
   constructor(
     private confirmationService: ConfirmationService,
     private router: Router,
-    private withdrawalService: WithdrawalService, 
+    private withdrawalService: WithdrawalService,
     @Inject(NOTYF) private notyf: Notyf
   ) {}
 
-  confirmRejectWithdrawal(user: string, amount: string, currency: string, withdrawalId: string, status: string) {
+  confirmRejectWithdrawal(
+    user: string,
+    amount: string,
+    currency: string,
+    withdrawalId: string,
+    status: string
+  ) {
     this.confirmationService.confirm({
       header: 'Reject Withdrawal',
       message: `Are you sure you want to reject withdrawal of "${currency} ${amount}" from "${user}" ? This action cannot be undone.`,
@@ -68,19 +55,20 @@ export class ManageWithdrawalComponent {
         // delete user
         // show toast notification for deletion status
         // this.router.navigate(['/admin/manage-withdrawal']);
-        if(status === 'approved') {
+        if (status === 'approved') {
           this.notyf.error('Withdrawal already approved');
           return;
         }
-        this.withdrawalService.updateWithdrawalStatus(withdrawalId, "rejected").subscribe({
-          next: () => {
-            this.notyf.success('Withdrawal rejected successfully');
-          },
-          error: (error: Error) => {
-            this.notyf.error(error.message);
-          }
-        })
-
+        this.withdrawalService
+          .updateWithdrawalStatus(withdrawalId, 'rejected')
+          .subscribe({
+            next: () => {
+              this.notyf.success('Withdrawal rejected successfully');
+            },
+            error: (error: Error) => {
+              this.notyf.error(error.message);
+            },
+          });
       },
       // reject: () => {
       //   this.messageService.add({
@@ -92,7 +80,13 @@ export class ManageWithdrawalComponent {
       // },
     });
   }
-  confirmApproveWithdrawal(user: string, amount: string, currency: string, withdrawalId: string, userId: string) {
+  confirmApproveWithdrawal(
+    user: string,
+    amount: string,
+    currency: string,
+    withdrawalId: string,
+    userId: string
+  ) {
     this.confirmationService.confirm({
       header: 'Approve Withdrawal',
       message: `Are you sure you want to approve withdrawal of "${currency} ${amount}" from "${user}" ? This action cannot be undone.`,
@@ -104,14 +98,16 @@ export class ManageWithdrawalComponent {
         // delete user
         // show toast notification for deletion status
         // this.router.navigate(['/admin/manage-withdrawal']);
-        this.withdrawalService.approveWithdrawal(withdrawalId, userId, amount).subscribe({
-          next: () => {
-            this.notyf.success('Withdrawal approved');
-          },
-          error: (error: Error) => {
-            this.notyf.error(error.message);
-          }
-        })
+        this.withdrawalService
+          .approveWithdrawal(withdrawalId, userId, amount)
+          .subscribe({
+            next: () => {
+              this.notyf.success('Withdrawal approved');
+            },
+            error: (error: Error) => {
+              this.notyf.error(error.message);
+            },
+          });
       },
       // reject: () => {
       //   this.messageService.add({
@@ -124,7 +120,12 @@ export class ManageWithdrawalComponent {
     });
   }
 
-  confirmDeleteWithdrawal(user: string, amount: string, currency: string, withdrawalId: string) {
+  confirmDeleteWithdrawal(
+    user: string,
+    amount: string,
+    currency: string,
+    withdrawalId: string
+  ) {
     this.confirmationService.confirm({
       header: 'Delete Withdrawal',
       message: `Are you sure you want to delete withdrawal of "${currency} ${amount}" from "${user}" ? This action cannot be undone.`,
@@ -149,15 +150,15 @@ export class ManageWithdrawalComponent {
     });
   }
 
-  handleDelete(withdrawalId: string){ 
+  handleDelete(withdrawalId: string) {
     this.withdrawalService.deleteWithdrawal(withdrawalId).subscribe({
       next: () => {
-        this.notyf.success('Withdrawal deleted.')
+        this.notyf.success('Withdrawal deleted.');
       },
-      error: (error: Error) => { 
-        this.notyf.error(error.message)
-      }
-    })
+      error: (error: Error) => {
+        this.notyf.error(error.message);
+      },
+    });
   }
 
   ngOnInit() {

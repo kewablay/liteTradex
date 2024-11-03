@@ -15,7 +15,7 @@
       [rows]="5"
       [showCurrentPageReport]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [rowsPerPageOptions]="[10, 25, 50]"
+      [rowsPerPageOptions]="[5, 15, 50]"
     >
       <ng-template pTemplate="header">
         <tr>
@@ -23,7 +23,8 @@
           <th>Amount</th>
           <th>Wallet Address</th>
           <th>Status</th>
-          <th>Actions</th>
+          <th colspan="2">Actions</th>
+          <!-- <th>Delete</th> -->
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-withdrawal>
@@ -37,8 +38,8 @@
           <td>{{ withdrawal["status"] }}</td>
           <td id="actions">
             <p-button
-            icon="pi pi-check-square"
-            label="Approve"
+              icon="pi pi-check-square"
+              label="Approve"
               outlined="true"
               styleClass="edit-btn"
               rounded="true"
@@ -49,8 +50,8 @@
                   withdrawal['exchangeName'],
                   withdrawal['amount'],
                   withdrawal['currency'],
-                  withdrawal['id'], 
-                  withdrawal['userId'] 
+                  withdrawal['id'],
+                  withdrawal['userId']
                 )
               "
             />
@@ -69,11 +70,13 @@
                   withdrawal['exchangeName'],
                   withdrawal['amount'],
                   withdrawal['currency'],
-                  withdrawal['id'], 
+                  withdrawal['id'],
                   withdrawal['status']
                 )
               "
             />
+          </td>
+          <td id="actions">
             <p-button
               icon="pi pi-trash"
               label="Del"
@@ -83,12 +86,14 @@
               size="small"
               severity="danger"
               id="delete-button"
-              (click)="confirmDeleteWithdrawal(
-                withdrawal['exchangeName'],
-                withdrawal['amount'],
-                withdrawal['currency'],
-                withdrawal['id']
-              )"
+              (click)="
+                confirmDeleteWithdrawal(
+                  withdrawal['exchangeName'],
+                  withdrawal['amount'],
+                  withdrawal['currency'],
+                  withdrawal['id']
+                )
+              "
             />
           </td>
         </tr>
@@ -96,6 +101,22 @@
     </p-table>
   </div>
 
+  } @else {
+  <div class="users-list">
+    <div class="custom-loader">
+      <div class="loader">
+        <p-progressSpinner
+          aria-label="Loading"
+          styleClass="loader-lg"
+          strokeWidth="4"
+          fill="var(--clr-surface)"
+          animationDuration=".5s"
+          [title]="'Loading contents...'"
+        />
+        <p>Loading contents...</p>
+      </div>
+    </div>
+  </div>
   }
 </main>
 
