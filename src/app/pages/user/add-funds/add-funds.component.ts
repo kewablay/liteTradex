@@ -13,5 +13,4 @@ import { FormsModule, NgModel } from '@angular/forms';
 export class AddFundsComponent {
   paymentMethod: string = 'bank';  // Default value
   amount: number | null = null;
-
 }

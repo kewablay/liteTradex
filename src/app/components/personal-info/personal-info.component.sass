@@ -1,0 +1,32 @@
+@use '../../../styles/_variables' as *
+@use '../../../styles/_mixins' as *
+@use '../../../styles/_functions' as *
+
+
+.personal-info
+    margin-top: 2rem
+
+    .review-section
+        margin-top: 3rem
+
+        h3
+            font-size: 20px
+
+        .review
+            background: $clr-black
+            padding: 1.5rem
+            margin-top: 1rem
+
+            .review-item + .review-item
+                margin-top: 1rem
+
+            .review-item
+                @include flex-between($direction: row, $gap: 1rem)
+                background: $clr-dark-blue-light
+                color: white
+                padding: 1rem
+                border-radius: 5px
+
+                p
+                    margin: 0
+
