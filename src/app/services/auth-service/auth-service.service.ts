@@ -62,10 +62,11 @@ export class AuthService {
   }
 
   logout() {
-    this.cookieService.delete('AUTH_TOKEN', '/');
     this.cookieService.delete('USER_ROLE', '/');
+    this.cookieService.delete('AUTH_TOKEN', '/');
     localStorage.removeItem('user');
     this.auth.signOut();
+    // this.cookieService.delete('USER_ROLE', '/');
     this.router.navigate(['/auth/login']);
   }
 }
