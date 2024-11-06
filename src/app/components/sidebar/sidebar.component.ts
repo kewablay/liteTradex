@@ -39,11 +39,7 @@ export class SidebarComponent {
       icon: 'assets/icons/dashboard.svg',
       route: 'home',
     },
-    {
-      name: 'Add funds',
-      icon: 'assets/icons/add-funds.svg',
-      route: 'add-funds',
-    },
+
     {
       name: 'Wallet Exchange',
       icon: 'assets/icons/wallet-exchange.svg',
@@ -66,6 +62,11 @@ export class SidebarComponent {
       name: 'Manage Withdrawal',
       icon: 'assets/icons/withdraw.svg',
       route: 'admin/manage-withdrawal',
+    },
+    {
+      name: 'Add funds',
+      icon: 'assets/icons/add-funds.svg',
+      route: 'admin/add-funds',
     },
   ];
 

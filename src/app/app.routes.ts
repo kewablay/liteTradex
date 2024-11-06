@@ -48,14 +48,6 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'add-funds',
-        canActivate: [roleGuard],
-        loadComponent: () =>
-          import('./pages/user/add-funds/add-funds.component').then(
-            (m) => m.AddFundsComponent
-          ),
-      },
-      {
         path: 'withdraw',
         canActivate: [roleGuard],
         loadComponent: () =>
@@ -97,6 +89,14 @@ export const routes: Routes = [
               import(
                 './pages/admin/manage-withdrawal/manage-withdrawal.component'
               ).then((m) => m.ManageWithdrawalComponent),
+          },
+          {
+            path: 'add-funds',
+            canActivate: [roleGuard],
+            loadComponent: () =>
+              import('./pages/user/add-funds/add-funds.component').then(
+                (m) => m.AddFundsComponent
+              ),
           },
         ],
       },
